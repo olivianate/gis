@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body,
+		html {
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			font-size: 14px;
+		}
+
+		.drawingToolbar {
+			color: #666;
+			background: #fff;
+			z-index: 999;
+			position: absolute;
+			width: auto;
+			top: 10px;
+			left: 10px;
+			line-height: 1;
+			height: auto;
+			padding: 15px;
+		}
+		label{
+			display: block;
+			margin-bottom: 10px;
+		}
+		a {
+			cursor: pointer;
+			display: block;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<div id="map"></div>
+	<div class="drawingToolbar">
+		<div class="getCity">
+			<label for="">数据格式：
+					[[{
+							"lng": 119.96476082109066,
+							"lat": 30.343381840299294
+						},
+						{
+							"lng": 120.06767864200374,
+							"lat": 30.301988799424937
+						},
+						{
+							"lng": 120.20569154660541,
+							"lat": 30.321460781761544
+						}
+					],[ {
+						"lng": 120.07630850806497,
+						"lat": 30.438095684887397
+					},
+					{
+						"lng": 120.07630850806497,
+						"lat": 30.438095684887397
+					},
+					{
+						"lng": 119.96476082109066,
+						"lat": 30.343381840299294
+					}]]
+			</label>
+			<textarea rows="10" cols="50" id="overlays">
+				[[{
+						"lng": 119.96476082109066,
+						"lat": 30.343381840299294
+					},
+					{
+						"lng": 120.06767864200374,
+						"lat": 30.301988799424937
+					},
+					{
+						"lng": 120.20569154660541,
+						"lat": 30.321460781761544
+					}]]
+			</textarea>
+			<div>
+				<input type="button" onclick="add_overlay();" value="添加覆盖物" />
+				<input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+<script>
+	var map;
+	var os = document.getElementById("overlays");
+	//创建和初始化地图函数：
+	function initMap() {
+		map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(120.251157, 30.251835), 13);
+		map.enableScrollWheelZoom();
+	};
+	initMap();
+
+	//添加覆盖物
+	function add_overlay() {
+		var data = os.value;
+		var pts = JSON.parse(data);
+		// console.log(JSON.parse(pts));
+		var polygons = [];
+		pts.forEach(function (v, i) {
+			v.forEach(function (vq, iq) {
+				polygons.push(new BMap.Point(vq.lng, vq.lat));
+			})
+			var polygon = new BMap.Polygon(polygons);
+			map.addOverlay(polygon);
+		});
+		map.setViewport(polygons);
+	};
+
+	//清除覆盖物
+	function remove_overlay() {
+		map.clearOverlays();
+	}
+
+</script>
