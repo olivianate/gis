@@ -1,0 +1,119 @@
+/*地图
+*/
+.demo-body {
+  position: absolute;
+  top: 0;
+  left: 220px;
+  right: 0;
+  bottom: 0;
+}
+.demo-body-open {
+  .code-area {
+    width: 500px;
+  }
+  .code-map {
+    margin-left: 500px;
+  }
+  .code-open {
+    left: 500px;
+  }
+}
+.demo-body-close {
+  .code-area {
+    width: 0;
+  }
+  .code-map {
+    margin-left: 0;
+  }
+  .code-open {
+    left: 0;
+  }
+}
+.code-open {
+  background-color: #fff;
+  position: absolute;
+  width: 20px;
+  height: 94px;
+  border: 1px solid #e5e5e5;
+  border-left: none;
+  top: 50%;
+  right: 0;
+  margin: -48px -20px 0 0;
+  cursor: pointer;
+  line-height: 88px;
+  font-size: 36px;
+  font-family: Times;
+  text-align: center;
+  color: #fff;
+  visibility: visible;
+  /* left: 0; */
+}
+.code-wrap {
+  height: 100%;
+  background: #fff;
+  position: absolute;
+  z-index: 2;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  margin: 0;
+  visibility: visible;
+}
+
+.code-bar {
+  height: 41px;
+  line-height: 41px;
+  background: #f5f5f5;
+  font-size: 14px;
+  padding: 0 10px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  border-bottom: 1px solid #e5e5e5;
+  > a {
+    float: right;
+    display: block;
+    padding: 0 3px;
+  }
+}
+.code-con {
+  width: 100%;
+  position: absolute;
+  top: 41px;
+  bottom: 0;
+  > div {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+}
+.code-area {
+  /* width: 500px; */
+  overflow: hidden;
+  height: 100%;
+  display: block;
+  position: relative;
+  .ant-layout-sider {
+    background-color: #fff;
+    min-width: 500px;
+  }
+}
+.code-map {
+  /* margin-left: 500px; */
+  width: auto;
+  height: 100%;
+  border: none;
+  z-index: 1;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  > iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #fff;
+  }
+}

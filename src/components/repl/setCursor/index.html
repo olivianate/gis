@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body, html {    
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.drawingToolbar{
+			z-index: 999;
+			position: absolute;
+			top: 10px;;
+			left: 10px;
+			right: 10px;
+			width: 100%;
+			line-height: 1;
+		}
+		.drawingToolbar a{
+			font-size: 14px;
+			background: #fff;
+			cursor: pointer;
+			display: inline-block;
+			width: auto;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<div class="drawingToolbar">
+		<a onclick="setCursorType()">设置鼠标样式 +</a>
+	</div>
+	<div id="map" style="width:100%;height:100%;"></div>
+</body>
+</html>
+<script type="text/javascript">
+	var map;
+	//创建和初始化地图函数
+    function initMap(){
+		map = new BMap.Map("map"); 
+		map.centerAndZoom(new BMap.Point(120.137323,30.232054),12);
+		map.enableScrollWheelZoom();
+    };
+    initMap();
+	
+	function getCursor(icon){
+		return 'url(' + icon + '), crosshair';
+	}
+
+	function setCursor(type) {
+        if (!this.map) {
+            return;
+        }
+        this.map.setDefaultCursor(type);
+	}
+	function setCursorType(){
+		var icon = 'http://api0.map.bdimg.com/images/pointer.cur';
+		setCursor(getCursor(icon));
+	}
+</script>
