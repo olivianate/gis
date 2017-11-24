@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack")
+const ip = require('ip');
 const webpackMerge = require("webpack-merge");
 const OpenBrowserPlugin = require("open-browser-webpack-plugin");
 const autoprefixer = require("autoprefixer");
@@ -10,22 +11,17 @@ const config = require("./config");
 const port = config.port;
 
 module.exports = function(env){
-	console.log(`
-#################################################
-  Server is listening at: http://localhost:${config.port} 
-#################################################
-	`);
+	const host = ip.address();
+	console.log(`Server is listening at: http://${host}:${config.port}`);
 	return webpackMerge(baseConfig(env),{
 		entry:[
 		    "react-hot-loader/patch",
-	        "webpack-dev-server/client?http://localhost:" + port,
-		    "webpack/hot/only-dev-server",
+	        `webpack-dev-server/client?http://${host}:` + port,
 			path.resolve(__dirname,"../src/main.js"),
 		],
-	    devtool: "cheap-module-source-map",
+	    devtool: "cheap-eval-source-map",
 		plugins:[
 			new webpack.HotModuleReplacementPlugin(),
-			new OpenBrowserPlugin({ url: "http://localhost:" + port }),
 			new webpack.LoaderOptionsPlugin({
 				options:{
 					postcss(){
@@ -37,6 +33,7 @@ module.exports = function(env){
 		devServer:{
 			hot:true,
 			port:config.port,
+			host,
 			historyApiFallback:true,
 		}
 	})
