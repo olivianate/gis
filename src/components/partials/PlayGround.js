@@ -134,11 +134,11 @@ export default class PlayGround extends Component {
             <Icon type={iconType} style={{ fontSize: 14, color: "#08c" }} />
           </div>
           <div className={"code-area"}>
-            <div className={"code-bar"}>
+            {/* <div className={"code-bar"}> */}
               {/* <a>文档</a> */}
-              <a>刷新</a>
-              <a onClick={this.codeRun}>运行</a>
-            </div>
+              {/* <a>刷新</a> */}
+              {/* <a onClick={this.codeRun}>运行</a> */}
+            {/* </div> */}
             <div className={"code-con"}>
               <CodeMirror {...codeMirrorProps} />
             </div>

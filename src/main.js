@@ -7,9 +7,6 @@ Es6Promise.polyfill()
 import { AppContainer } from "react-hot-loader";
 import ROOT from "./router";
 
-// public styles go here
-import "../static/normalize.scss";
-
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>

@@ -2,6 +2,8 @@ const path = require("path")
 const webpack = require("webpack")
 const config = require("./config");
 const publicPath = config.publicPath;
+const marked = require("marked");
+const renderer = new marked.Renderer();
 
 module.exports = function(env){
 	return{
@@ -30,7 +32,18 @@ module.exports = function(env){
 				},
 				{
 					test: /\.md$/,
-					use: 'raw-loader',
+					use: [
+						{
+							loader: "html-loader"
+						},
+						{
+							loader: "markdown-loader",
+							options: {
+								pedantic: true,
+								renderer
+							}
+						}
+					]
 				},
 				{ 
 					test: /\.(png|jpg|gif)$/, 

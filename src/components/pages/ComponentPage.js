@@ -11,7 +11,7 @@ import Layout from '../layouts/Layout';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 
-class ComponentPage extends Component {
+export default class App extends Component {
 
   rootSubmenuKeys = ['sub1'];
   
@@ -90,5 +90,3 @@ class ComponentPage extends Component {
     )
   }
 };
-
-export default ComponentPage;
