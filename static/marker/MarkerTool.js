@@ -257,6 +257,6 @@ if (typeof BMapLib._toolInUse == "undefined") {
 		};
 		c._map.addEventListener("click", c._clickHandler)
 	};
-	b.CUR_IMG = "http://api.map.baidu.com/library/MarkerTool/1.2/src/images/transparent.cur";
-	b.ICON_IMG = "http://api.map.baidu.com/library/MarkerTool/1.2/src/images/us_mk_icon.png";
+	b.CUR_IMG = "https://api.map.baidu.com/library/MarkerTool/1.2/src/images/transparent.cur";
+	b.ICON_IMG = "https://api.map.baidu.com/library/MarkerTool/1.2/src/images/us_mk_icon.png";
 })();
