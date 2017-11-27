@@ -1,7 +1,7 @@
 module.exports = {
 	port:6002,
 	vendor:[
-		"react",
+		// "react",
 		"react-dom",
 		"react-hot-loader",
 		"react-router-dom",
@@ -13,5 +13,5 @@ module.exports = {
 		"redux-thunk",
 		"classnames",
 	],
-	publicPath:"/",
+	publicPath:"/gis/",
 }

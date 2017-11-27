@@ -11,7 +11,7 @@ import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/xml/xml";
 import PropTypes from "prop-types";
 import { Icon } from "antd";
-import defaultRepl from "!html-loader!../repl/temple/index.html";
+import defaultRepl from "!html-loader!../../../static/temple/index.html";
 import styles from "./PlayGround.less";
 
 export default class PlayGround extends Component {
@@ -36,7 +36,7 @@ export default class PlayGround extends Component {
   async loadRepl() {
     const { componentName } = this.props;
     try {
-      const repl = await import(`!html-loader!../repl/${componentName}/index.html`);
+      const repl = await import(`!html-loader!../../../static/${componentName}/index.html`);
       this.setState({
         repl
       });

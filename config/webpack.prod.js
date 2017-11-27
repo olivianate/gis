@@ -40,7 +40,7 @@ module.exports = function(env) {
               "postcss-loader"
             ]
           }),
-          exclude: ["/node_modules/", path.resolve(__dirname, "../static")]
+          // exclude: ["/node_modules/", path.resolve(__dirname, "../static")]
         },
         {
           test: /\.s?css$/,
@@ -48,7 +48,7 @@ module.exports = function(env) {
             fallback: "style-loader",
             use: ["css-loader?minimize", "sass-loader", "postcss-loader"]
           }),
-          include: [path.resolve(__dirname, "../static")]
+          // include: [path.resolve(__dirname, "../static")]
         },
         {
           test: /\.less$/,
@@ -56,10 +56,10 @@ module.exports = function(env) {
             fallback: "style-loader",
             use: ["css-loader?minimize", "postcss-loader", "less-loader"]
           }),
-          include: [
-            path.resolve(__dirname, "../node_modules"),
-            path.resolve(__dirname, "../src")
-          ]
+          // include: [
+          //   path.resolve(__dirname, "../node_modules"),
+          //   path.resolve(__dirname, "../src")
+          // ]
         },
         {
 					test: /\.md$/,
@@ -102,8 +102,11 @@ module.exports = function(env) {
         allChunks: true
       }),
       new HTMLWebpackPlugin({
+        title: 'GIS',
+        minify:false,
         template: "src/index.html",
         filename: './index.html',
+        version: '',
       }),
       new webpack.optimize.CommonsChunkPlugin({
         name: ["vendor", "manifest"]

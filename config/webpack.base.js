@@ -10,12 +10,12 @@ module.exports = function(env){
 		entry:{
 			main:path.resolve(__dirname,"../src/main.js"),
 		},
-		// externals: {
-		// 	'react': 'React',
-		//   },
+		externals: {
+			'React': 'React',
+		},
 		output: {
 			path:path.resolve(__dirname,"../dist"),
-            sourceMapFilename: "[name].js.map",
+            // sourceMapFilename: "[name].js.map",
             filename:"[name].js",
             publicPath,
         },

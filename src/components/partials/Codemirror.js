@@ -4,7 +4,7 @@ import className from 'classnames';
 import isEqual from 'lodash/isEqual';
 import codemirror from 'codemirror';
 
-import styles from './Codemirror.less';
+import './Codemirror.less';
 
 function normalizeLineEndings(str) {
   if (!str) return str;
@@ -115,8 +115,8 @@ export default class CodeMirror extends Component {
   }
   render() {
     const editorClassName = className(
-      styles.ReactCodeMirror,
-      this.state.isFocused ? styles['ReactCodeMirror--focused'] : null,
+      'ReactCodeMirror',
+      this.state.isFocused ? 'ReactCodeMirror--focused' : null,
       this.props.className,
     );
     return (
