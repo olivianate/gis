@@ -4,7 +4,6 @@ module.exports = {
 		"react",
 		"react-dom",
 		"react-hot-loader",
-		"react-router",
 		"react-router-dom",
 		"redux",
 		"react-redux",

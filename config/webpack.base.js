@@ -15,8 +15,8 @@ module.exports = function(env){
 		//   },
 		output: {
 			path:path.resolve(__dirname,"../dist"),
-            sourceMapFilename: "[name].map",
-            filename:(env === "dev")?"[name].js":"[name].[hash:16].js",
+            sourceMapFilename: "[name].js.map",
+            filename:"[name].js",
             publicPath,
         },
         resolve: {
@@ -28,7 +28,6 @@ module.exports = function(env){
 				{
 					test:/\.jsx?$/,
 					use:["babel-loader"],
-					exclude:"/node_modules/"
 				},
 				{
 					test: /\.md$/,

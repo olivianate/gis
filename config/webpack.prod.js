@@ -8,6 +8,9 @@ const precss = require("precss");
 const baseConfig = require("./webpack.base.js");
 const config = require("./config.js");
 const vendor = config.vendor;
+const marked = require("marked");
+const renderer = new marked.Renderer();
+
 
 module.exports = function(env) {
   return webpackMerge(baseConfig(env), {
@@ -57,7 +60,22 @@ module.exports = function(env) {
             path.resolve(__dirname, "../node_modules"),
             path.resolve(__dirname, "../src")
           ]
-        }
+        },
+        {
+					test: /\.md$/,
+					use: [
+						{
+							loader: "html-loader"
+						},
+						{
+							loader: "markdown-loader",
+							options: {
+								pedantic: true,
+								renderer
+							}
+						}
+					]
+				}
       ]
     },
     plugins: [
@@ -84,7 +102,8 @@ module.exports = function(env) {
         allChunks: true
       }),
       new HTMLWebpackPlugin({
-        template: "src/index.html"
+        template: "src/index.html",
+        filename: './index.html',
       }),
       new webpack.optimize.CommonsChunkPlugin({
         name: ["vendor", "manifest"]

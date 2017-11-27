@@ -50,16 +50,22 @@ export default class PlayGround extends Component {
   }
 
   codeRun = () => {
-    // this.setState({
-    //   repl: defaultRepl
-    // });
-    // console.log(this.state.repl);
-    console.log(this.mount);
-    // React.unmountComponentAtNode(this.mount);
+    ReactDOM.unmountComponentAtNode(this.getMountTarget());
     this.executeCode(this.state.repl);
   };
 
+  getMountTarget() {
+    const doc = this.getDoc();
+    console.log(doc.body);
+    return doc.body.children[0];
+  }
+
+  getDoc() {
+    return ReactDOM.findDOMNode(this.frame).contentDocument; // eslint-disable-line
+  }
+
   executeCode(repl) {
+
     this.setState({
       frameTemlp: this.frameNode(repl)
     });
@@ -123,8 +129,6 @@ export default class PlayGround extends Component {
       autoFocus: true
     };
 
-    console.log(this.state.wrapclass);
-
     const codeClass = `demo-body demo-body-${this.state.wrapclass}`;
     const iconType = this.state.wrapclass == "open" ? "left" : "right";
     return (
@@ -134,11 +138,11 @@ export default class PlayGround extends Component {
             <Icon type={iconType} style={{ fontSize: 14, color: "#08c" }} />
           </div>
           <div className={"code-area"}>
-            {/* <div className={"code-bar"}> */}
-              {/* <a>文档</a> */}
-              {/* <a>刷新</a> */}
-              {/* <a onClick={this.codeRun}>运行</a> */}
-            {/* </div> */}
+            <div className={"code-bar"}>
+              <a>文档</a>
+              <a>刷新</a>
+              <a onClick={this.codeRun}>运行</a>
+            </div>
             <div className={"code-con"}>
               <CodeMirror {...codeMirrorProps} />
             </div>
