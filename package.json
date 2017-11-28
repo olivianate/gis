@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "set NODE_ENV=dev && webpack-dev-server --profile --open",
-    "build": "set NODE_ENV=prod && webpack",
+    "start": "webpack-dev-server --config ./config/webpack.dev.js --profile --open",
+    "build": "webpack --config ./conf/webpack.prod.js",
     "serve": "http-server ./dist -p 8888 -o"
   },
   "keywords": [

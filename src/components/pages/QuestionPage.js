@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React, { Component } from "react";
-import LayoutHome from "../layouts/LayoutHome";
+import LayoutPage from "../layouts/LayoutPage";
 import "./markdown.less";
 // import questionDoc from "!html-loader!../doc/question.md";
 
@@ -21,14 +21,14 @@ export default class App extends Component {
 
   render() {
     return (
-      <LayoutHome {...this.props}>
+      <LayoutPage {...this.props}>
         <main className={"main"}>
           <article
             className={classnames("question-block", "markdown")}
             dangerouslySetInnerHTML={{ __html: this.state.article }}
           />
         </main>
-      </LayoutHome>
+      </LayoutPage>
     );
   }
 }

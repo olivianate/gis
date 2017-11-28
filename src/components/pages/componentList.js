@@ -72,9 +72,9 @@ export default {
     title: 'POI检索',
     page: [
       {
-        name: 'Temple',
-        icon: 'temple',
-        title: '自定义POI搜索分页',
+        name: 'search',
+        icon: 'search',
+        title: 'POI搜索分页',
         parent: 'sub3',
       }],
   },{

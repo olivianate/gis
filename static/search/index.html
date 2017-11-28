@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body, html {    
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.wrap{
+			position: absolute;
+			top:0;
+			left: 0;
+			background-color: #fff;
+		}
+		.drawingToolbar{
+			background: #fff;
+			z-index: 999;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			line-height: 1;
+		}
+		.drawingToolbar a{
+			margin: 5px;
+			cursor: pointer;
+			display: inline-block;
+			width: 32px;
+			height: 32px;
+			background: url();
+		}
+		.drawingToolbar a.addMarkerBtn{
+			background-position: -62px -184px;
+		}
+		/*隐藏阴影*/
+		.BMap_shadow{  
+    	display: none; 
+		}
+		.BMap_pop>img{
+			display: none;
+		}
+		.table-wrap{
+			font-size: 12px;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<div id="map"></div>
+	<div class="wrap">
+		<table>
+			<tr>
+				<td><span>策略</span></td>
+				<td><div id="driving_way">
+					<select>
+						<option value="0">最少时间</option>
+						<option value="1">最短距离</option>
+						<option value="2">避开高速</option>
+					</select>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td><span>起点</span></td>
+				<td><input type="text" id="sPoint" placeholder="120.290785,30.488837"></td>
+			</tr>
+			<tr>
+				<td><span>终点</span></td>
+				<td><input type="text" id="ePoint" placeholder="120.208989,30.33758"></td>
+			</tr>
+			<tr>
+				<td ><input type="button" value="查询" id="btnSearch" onclick="fnSearch()"> </td>
+				<td ><input type="button" value="重置" id="btnReset" onclick="fnReset()"> </td>
+			</tr>
+		</table>
+		<br/>
+		<textarea id="result0" rows="1" cols="40"></textarea>
+		<br />
+		<textarea id="result1" rows="1" cols="40"></textarea>
+		<br />
+		<textarea id="result2" rows="1" cols="40"></textarea>
+	</div>
+</body>
+</html>
+<script>
+	var map;
+	//创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      addMapOverlay();//向地图添加覆盖物
+    };
+    function createMap(){ 
+      map = new BMap.Map("map"); 
+      map.centerAndZoom(new BMap.Point(112.571757,37.798085),9);
+    };
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    };
+    function addMapOverlay(){
+    };
+    //向地图添加控件
+    function addMapControl(){
+      
+    };
+    initMap();
+
+	function fnSearch(){
+		var sp = $("#sPoint").val();
+        var ep = $("#ePoint").val();
+        var i=$("#driving_way select").val();
+        //三种驾车策略：最少时间，最短距离，避开高速
+	    var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+        if(sp && ep){
+            search(sp.split(",")[0],sp.split(",")[1],
+                    ep.split(",")[0],ep.split(",")[1],routePolicy[i]);
+        }
+	};
+
+	function fnReset(){
+		var sp = $("#sPoint").val("");
+        var ep = $("#ePoint").val("");
+        $("#result0").html("");
+        $("#result1").html("");
+        $("#result2").html("");
+        map.clearOverlays();
+	}
+
+	function search(slng,slat,elng,elat,route,tujd){
+        //确定查询的策略，百度现在只支持最短时间，最短路程，不走高速三种策略
+        if(slng && slat && elng && elat){
+            var start = new BMap.Point(slng,slat);
+            var end = new BMap.Point(elng,elat);
+            
+            var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true},policy: route});
+            if(tujd && tujd.length>0){
+                driving.search(start, end,{waypoints:tujd});
+            }else{
+                driving.search(start, end);
+            }
+            driving.setSearchCompleteCallback(function(results){
+                var i=$("#driving_way select").val();
+                if(i == 0){
+                    policy = '最少时间';
+                }else if(i == 1){
+                    policy = '最短距离';
+                }else{
+                    policy = '避开高速';
+                }
+                $('#result'+i).html(policy +'：'+results.getPlan(0).getDistance(true));
+            });
+        }
+    }
+</script>

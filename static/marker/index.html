@@ -41,6 +41,7 @@
 </head>
 <body>
 	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script type="text/javascript" src="https://statictest.tf56.com/ehuodi/libs/map-tool/MarkerTool.js"></script>
 	<div class="drawingToolbar">
 		<a onclick="mkrToolOpen()">创建点</a>
 	</div>
@@ -52,7 +53,7 @@
 	var map;
 	var curMkr = null; // 记录当前添加的Mkr
 	var infoWin = null; //记录弹窗
-	var mkrIcon = '';
+	var mkrIcon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
 
 	//创建和初始化地图函数：
     function initMap(){
