@@ -5,12 +5,14 @@
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<title>地图展示</title>
 	<style type="text/css">
-		body, html {    
+		body,
+		html {
 			margin: 0;
 			height: 100%;
 			width: 100%;
 			position: absolute;
 		}
+
 		#map {
 			position: absolute;
 			top: 0;
@@ -20,16 +22,19 @@
 			width: 100%;
 			height: 100%;
 		}
-		.drawingToolbar{
+
+		.drawingToolbar {
 			z-index: 999;
 			position: absolute;
-			top: 10px;;
+			top: 10px;
+			;
 			left: 10px;
 			right: 10px;
 			width: 100%;
 			line-height: 1;
 		}
-		.drawingToolbar a{
+
+		.drawingToolbar a {
 			font-size: 14px;
 			background: #fff;
 			cursor: pointer;
@@ -39,14 +44,15 @@
 		}
 	</style>
 </head>
+
 <body>
 	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
-	<script type="text/javascript" src="https://statictest.tf56.com/ehuodi/libs/map-tool/MarkerTool.js"></script>
 	<div class="drawingToolbar">
 		<a onclick="mkrToolOpen()">创建点</a>
 	</div>
 	<div id="map" style="width:100%;height:100%;"></div>
 </body>
+
 </html>
 <script type="text/javascript">
 
@@ -56,59 +62,59 @@
 	var mkrIcon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
 
 	//创建和初始化地图函数：
-    function initMap(){
-      createMap();//创建地图
-      setMapEvent();//设置地图事件
-      addMapControl();//向地图添加控件
-      addMapOverlay();//向地图添加覆盖物
-    };
-    function createMap(){ 
-      map = new BMap.Map("map"); 
-      map.centerAndZoom(new BMap.Point(120.137323,30.232054),12);
-    };
-    function setMapEvent(){
-      map.enableScrollWheelZoom();
-      map.enableKeyboard();
-      map.enableDragging();
-      map.enableDoubleClickZoom()
-    };
-    function addMapOverlay(){
-    };
-    //向地图添加控件
-    function addMapControl(){
-    };
-    initMap();
-										
-	function mkrToolOpen(){
+	function initMap() {
+		createMap();//创建地图
+		setMapEvent();//设置地图事件
+		addMapControl();//向地图添加控件
+		addMapOverlay();//向地图添加覆盖物
+	};
+	function createMap() {
+		map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(120.137323, 30.232054), 12);
+	};
+	function setMapEvent() {
+		map.enableScrollWheelZoom();
+		map.enableKeyboard();
+		map.enableDragging();
+		map.enableDoubleClickZoom()
+	};
+	function addMapOverlay() {
+	};
+	//向地图添加控件
+	function addMapControl() {
+	};
+	initMap();
+
+	function mkrToolOpen() {
 		var mkrTool = new BMapLib.MarkerTool(map);
 		mkrTool.open();
 		var icon = newMarkIcon(mkrIcon);
 		mkrTool.setIcon(icon);
-		mkrTool.addEventListener("markend", function(e) {
-				var mkr = e.marker;
-				mkr.addEventListener("click",addClickHandler);
-				addClickHandler(mkr);
-				curMkr = mkr;
+		mkrTool.addEventListener("markend", function (e) {
+			var mkr = e.marker;
+			mkr.addEventListener("click", addClickHandler);
+			addClickHandler(mkr);
+			curMkr = mkr;
 		});
 	};
 
 	function newMarkIcon(icon) {
-		return new BMap.Icon(icon, new BMap.Size(22, 32),{
-				anchor: new BMap.Size(10, 30), 
-				imageOffset: new BMap.Size(0, 0)
+		return new BMap.Icon(icon, new BMap.Size(22, 32), {
+			anchor: new BMap.Size(10, 30),
+			imageOffset: new BMap.Size(0, 0)
 		});
 	};
 
-	function infoHtml(data){
+	function infoHtml(data) {
 		var content = '';
 		content += "<table class='table-wrap'>";
 		content += "<tr>";
 		content += "<td width='40px'>*名称：</td>";
-		content += "<td width='230px'><input style='width:230px' type='text' id='txtName' value='"+ data.name +"'></td>";
+		content += "<td width='230px'><input style='width:230px' type='text' id='txtName' value='" + data.name + "'></td>";
 		content += "</tr>";
 		content += "<tr>";
 		content += "<td width='40px'>*地址：</td>";
-		content += "<td width='230px'><input style='width:230px' type='text' id='txtAddr' value='"+ data.address +"'></td>";
+		content += "<td width='230px'><input style='width:230px' type='text' id='txtAddr' value='" + data.address + "'></td>";
 		content += "</tr>";
 		content += "<tr>";
 		content += "<td align='right' colspan='2'>";
@@ -119,41 +125,41 @@
 		return content;
 	};
 
-	function addClickHandler(e){
+	function addClickHandler(e) {
 		var mkr = e;
-		if(e.currentTarget){
-				mkr = e.currentTarget;
+		if (e.currentTarget) {
+			mkr = e.currentTarget;
 		};
 		var data = mkr.data;
 		data.name = mkr.data.name || '';
 		var opts = {
-				width: 300,
-				height: 0,
-				offset:{
-						width: -0,
-						height: -20
-				}
+			width: 300,
+			height: 0,
+			offset: {
+				width: -0,
+				height: -20
+			}
 		};
 		var content = infoHtml(data), pt = mkr.getPosition();
-		infoWin = new BMap.InfoWindow(content,opts);
-		infoWin.addEventListener('open',function(){
+		infoWin = new BMap.InfoWindow(content, opts);
+		infoWin.addEventListener('open', function () {
 		});
-		map.openInfoWindow(infoWin,pt);//打开信息窗口
+		map.openInfoWindow(infoWin, pt);//打开信息窗口
 	};
 
 	//提交数据
-	function fnOK(){
+	function fnOK() {
 		var name = document.getElementById("txtName").value;
 		var addr = document.getElementById("txtAddr").value;
 
-		if(!name || !addr){
-				alert("星号字段必须填写");    
-				return;
+		if (!name || !addr) {
+			alert("星号字段必须填写");
+			return;
 		}
 		curMkr.data.name = name;
 		curMkr.data.addr = addr;
 
-		if(infoWin.isOpen()){
+		if (infoWin.isOpen()) {
 			map.closeInfoWindow();
 		}
 	}

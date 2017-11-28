@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<title>地图展示</title>
 	<style type="text/css">
-		body, html {    
+		body,
+		html {
 			margin: 0;
 			height: 100%;
 			width: 100%;
 			position: absolute;
 		}
+
 		#map {
 			position: absolute;
 			top: 0;
@@ -20,15 +23,18 @@
 			width: 100%;
 			height: 100%;
 		}
-		.drawingToolbar{
+
+		.drawingToolbar {
 			z-index: 999;
 			position: absolute;
-			top: 10px;;
+			top: 10px;
+			;
 			left: 10px;
 			right: 10px;
 			line-height: 1;
 		}
-		.drawingToolbar a{
+
+		.drawingToolbar a {
 			font-size: 14px;
 			background: #fff;
 			cursor: pointer;
@@ -38,6 +44,7 @@
 		}
 	</style>
 </head>
+
 <body>
 	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
 	<script type="text/javascript" src="https://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager.js"></script>
@@ -53,13 +60,14 @@
 	</div>
 	<div id="map" style="width:100%;height:100%;"></div>
 </body>
+
 </html>
 <script type="text/javascript">
 	var map;
 	var drawingManager;
 	var opts = {
-		strokeColor:"rgb(255, 0, 0)",    //边线颜色。
-		fillColor:"rgb(227, 0, 0)",      //填充颜色。当参数为空时，圆形将没有填充效果。
+		strokeColor: "rgb(255, 0, 0)",    //边线颜色。
+		fillColor: "rgb(227, 0, 0)",      //填充颜色。当参数为空时，圆形将没有填充效果。
 		strokeWeight: 1,       //边线的宽度，以像素为单位。
 		strokeOpacity: 1,    //边线透明度，取值范围0 - 1。
 		fillOpacity: 0.2,      //填充的透明度，取值范围0 - 1。
@@ -69,98 +77,98 @@
 	var curOverlay = null; // 记录当前绘制的overlay
 	var drawing = false; //绘图状态
 	var data = {
-		name:'名称',
-		description:'描述'
+		name: '名称',
+		description: '描述'
 	};//预设填充信息
 
 	//创建和初始化地图函数：
-    function initMap(){
-      createMap();//创建地图
-      setMapEvent();//设置地图事件
-      addMapControl();//向地图添加控件
-      addMapOverlay();//向地图添加覆盖物
-    };
-    function createMap(){ 
-      map = new BMap.Map("map"); 
-      map.centerAndZoom(new BMap.Point(120.137323,30.232054),12);
-    };
-    function setMapEvent(){
-	  map.enableScrollWheelZoom();
-	  map.addEventListener('click',mapClickEvent)
-    };
-    function addMapOverlay(){
-    };
-    //向地图添加控件
-    function addMapControl(){
-		drawingManager = new BMapLib.DrawingManager(map, {  
+	function initMap() {
+		createMap();//创建地图
+		setMapEvent();//设置地图事件
+		addMapControl();//向地图添加控件
+		addMapOverlay();//向地图添加覆盖物
+	};
+	function createMap() {
+		map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(120.137323, 30.232054), 12);
+	};
+	function setMapEvent() {
+		map.enableScrollWheelZoom();
+		map.addEventListener('click', mapClickEvent)
+	};
+	function addMapOverlay() {
+	};
+	//向地图添加控件
+	function addMapControl() {
+		drawingManager = new BMapLib.DrawingManager(map, {
 			isOpen: false, //是否开启绘制模式  
 			enableDrawingTool: false, //是否显示工具栏  
 			circleOptions: opts, //圆的样式
 			polygonOptions: opts //多边形的样式
 		});
 	};
-	
-    initMap();
-	
+
+	initMap();
+
 	function stopPropagation(e) {
 		e = e || window.event;
-		if (e && e.stopPropagation){
+		if (e && e.stopPropagation) {
 			e.stopPropagation();
 		} else {
 
 		}
 	}
 
-	function mapClickEvent(e){
-		if(curOverlay){
-			Editing('disable',curOverlay);
+	function mapClickEvent(e) {
+		if (curOverlay) {
+			Editing('disable', curOverlay);
 		}
 	}
-	function setDrawingPolygon(){
+	function setDrawingPolygon() {
 		drawingManager.open();
 		drawingManager.setDrawingMode(BMAP_DRAWING_POLYGON);
 		drawingManager.addEventListener('overlaycomplete', polygonComplete);
 	}
-	function setDrawingCircle(){
+	function setDrawingCircle() {
 		drawingManager.open();
 		drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE);
 		drawingManager.addEventListener('overlaycomplete', circleComplete);
 	}
 
-	function polygonComplete(e, data){
+	function polygonComplete(e, data) {
 		var pt = getPointInPolygon(e.overlay);
 		overlayComplete(e, pt);
 	}
 
-	function getPointInPolygon(polygon){
-		if(!polygon instanceof  BMap.Polygon||!polygon) {
+	function getPointInPolygon(polygon) {
+		if (!polygon instanceof BMap.Polygon || !polygon) {
 			return;
 		};
 		//获得中心
 		var bounds = polygon.getBounds();
 		var sw = bounds.getSouthWest();
 		var ne = bounds.getNorthEast();
-		var center=bounds.getCenter();
-		if(center){
-			var pt= new BMap.Point(center.lng, center.lat);
+		var center = bounds.getCenter();
+		if (center) {
+			var pt = new BMap.Point(center.lng, center.lat);
 		}
 		return pt;
 	}
 
-	function circleComplete(e){
+	function circleComplete(e) {
 		overlayComplete(e, e.overlay.point);
 	}
 
-	function overlayComplete(e, pt){
+	function overlayComplete(e, pt) {
 		//设置中心点
 		var o = e.overlay;
-		if(!o.data){
+		if (!o.data) {
 			o.data = data;
 		}
 		curOverlay = o;
-		curOverlay.addEventListener('click',function(e){
+		curOverlay.addEventListener('click', function (e) {
 			var target = e;
-			if(e.target || e.currentTarget){
+			if (e.target || e.currentTarget) {
 				target = e.target || e.currentTarget;
 			}
 			drawing = false;
@@ -171,83 +179,83 @@
 	}
 
 
-	function overlayClick(o, pt){
+	function overlayClick(o, pt) {
 		var content = infoHtml(o.data);
 		var newpt = new BMap.Point(pt.lng, pt.lat);
 		infoWin = new BMap.InfoWindow(content, newpt);
-		infoWin.addEventListener('open',function(){
+		infoWin.addEventListener('open', function () {
 		});
-		map.openInfoWindow(infoWin,pt);//打开信息窗口
+		map.openInfoWindow(infoWin, pt);//打开信息窗口
 		drawingManager.close();
 	}
 
-	function fnOK(){
+	function fnOK() {
 		var name = document.getElementById("txtName").value;
 		var description = document.getElementById("txtDesc").value;
 
-		if(!name){
-			alert("星号字段必须填写");    
+		if (!name) {
+			alert("星号字段必须填写");
 			return;
 		}
 		curOverlay.data.name = name;
 		curOverlay.data.description = description;
 
-		if(infoWin.isOpen()){
+		if (infoWin.isOpen()) {
 			map.closeInfoWindow();
 		}
 		drawingManager.close();
 	}
 
-	function fnEdit(){
+	function fnEdit() {
 		drawing = true;
 		submitEdit();
 	}
 
-	function fnDel(){
+	function fnDel() {
 		map.removeOverlay(curOverlay);
 		map.closeInfoWindow();
 	}
 
-	function submitEdit(){
-		Editing('enable',curOverlay);
+	function submitEdit() {
+		Editing('enable', curOverlay);
 	}
 
-	function Editing(state, overlay){  
-		state == 'enable' ? overlay.enableEditing() : overlay.disableEditing();    
+	function Editing(state, overlay) {
+		state == 'enable' ? overlay.enableEditing() : overlay.disableEditing();
 	};
-	
-	function infoHtml(data){
+
+	function infoHtml(data) {
 		var content = '';
 		content += "<table class='table-wrap'>";
 		content += "<tr>";
 		content += "<td width='60px'>*名称：</td>";
-		if(drawing){
-			content += "<td width='230px'><input style='width:230px' type='text' id='txtName' value='"+ data.name +"'></td>";
-		}else{
-			content += "<td width='230px'>"+ data.name +"</td>";
+		if (drawing) {
+			content += "<td width='230px'><input style='width:230px' type='text' id='txtName' value='" + data.name + "'></td>";
+		} else {
+			content += "<td width='230px'>" + data.name + "</td>";
 		}
 		content += "</tr>";
 		content += "<tr>";
 		content += "<td width='60px'>描述：</td>";
-		if(drawing){
-			content += "<td width='230px'><input style='width:230px' type='text' id='txtDesc' value='"+ data.description +"'></td>";
-		}else{
-			content += "<td width='230px'>"+ data.description +"</td>";
+		if (drawing) {
+			content += "<td width='230px'><input style='width:230px' type='text' id='txtDesc' value='" + data.description + "'></td>";
+		} else {
+			content += "<td width='230px'>" + data.description + "</td>";
 		}
 		content += "</tr>";
 		content += "<tr>";
 		content += "<td align='right' colspan='2'>";
-		if(drawing){
+		if (drawing) {
 			content += "<input type='button' name='btnOK' class='table-btn' onclick='fnOK()' value='确定'>";
 			content += "<input type='button' name='btnOK' class='table-btn' onclick='fnDel()' value='删除'>";
-		}else{
+		} else {
 			content += "<input type='button' name='btnOK' class='table-btn' onclick='fnEdit()' value='编辑'>";
 			content += "<input type='button' name='btnOK' class='table-btn' onclick='fnDel()' value='删除'>";
 		}
 		content += "</td>";
 		content += "</tr>";
 		content += "</table>";
-      	return content;
+		return content;
 	};
 
 </script>

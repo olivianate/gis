@@ -34,7 +34,7 @@ export default {
       {
         name: 'marker',
         icon: 'marker',
-        title: '绘制点',
+        title: '创建点',
         parent: 'sub2',
       },
       {
@@ -46,36 +46,8 @@ export default {
       {
         name: 'drawing',
         icon: 'drawing',
-        title: '绘制多边形,圆',
+        title: '创建多边形,圆',
         parent: 'sub2',
-      },
-      {
-        name: 'polyline',
-        icon: 'polyline',
-        title: '添加折线',
-        parent: 'sub2',
-      },
-      {
-        name: 'polygon',
-        icon: 'polygon',
-        title: '一系列点绘制多边形',
-        parent: 'sub2',
-      },
-      {
-        name: 'Marker2',
-        icon: 'marker',
-        title: '绘制行政区划',
-        parent: 'sub2',
-      }],
-  },{
-    key: 'sub3',
-    title: 'POI检索',
-    page: [
-      {
-        name: 'search',
-        icon: 'search',
-        title: 'POI搜索分页',
-        parent: 'sub3',
       }],
   },{
     key: 'sub4',
@@ -90,16 +62,6 @@ export default {
         name: 'drivingRoute',
         icon: 'drivingRoute',
         title: '驾车起终点/途径点',
-        parent: 'sub4',
-      }],
-  },{
-    key: 'sub5',
-    title: '坐标转换',
-    page: [
-      {
-        name: 'convertor',
-        icon: 'convertor',
-        title: '坐标转换',
         parent: 'sub4',
       }],
   }],

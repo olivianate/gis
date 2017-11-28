@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import DocumentContext from './DocumentContext';
+import { debug } from 'util';
 
 const hasConsole = typeof window !== 'undefined' && window.console;
 const noop = () => {};
@@ -88,12 +89,9 @@ export default class Frame extends Component {
     if (!this._isMounted) {
       return;
     }
-
     const doc = this.getDoc();
     if (doc && doc.readyState === 'complete') {
       if (doc.querySelector('div') === null) {
-        console.log(doc.querySelector('div'));
-
         this._setInitialContent = false;
       }
       const win = doc.defaultView || doc.parentView;
@@ -107,12 +105,12 @@ export default class Frame extends Component {
         </DocumentContext>
       );
 
-      if (initialRender) {
+      // if (initialRender) {
         doc.open('text/html', 'replace');
         doc.write(this.props.initialContent);
         doc.close();
         this._setInitialContent = true;
-      }
+      // }
 
       swallowInvalidHeadWarning();
 

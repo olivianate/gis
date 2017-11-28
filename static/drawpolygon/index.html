@@ -57,21 +57,8 @@
 	<div id="map"></div>
 	<div class="drawingToolbar">
 		<div class="getCity">
-			<label for="">数据格式： [{ "lng": 119.96476082109066, "lat": 30.343381840299294 }, { "lng": 120.06767864200374, "lat": 30.301988799424937
-				}]
-			</label>
-			<textarea rows="10" cols="50" id="overlays">
-				[{
-						"lng": 119.96476082109066,
-						"lat": 30.343381840299294
-					},
-					{
-						"lng": 120.06767864200374,
-						"lat": 30.301988799424937
-					}]
-			</textarea>
 			<div>
-				<input type="button" onclick="add_overlay();" value="添加折线" />
+				<input type="button" onclick="add_overlay();" value="添加覆盖物" />
 				<input type="button" onclick="remove_overlay();" value="删除覆盖物" />
 			</div>
 		</div>
@@ -81,7 +68,30 @@
 </html>
 <script>
 	var map;
-	var os = document.getElementById("overlays");
+	var data = [[{
+		"lng": 119.96476082109066,
+		"lat": 30.343381840299294
+	},
+	{
+		"lng": 120.06767864200374,
+		"lat": 30.301988799424937
+	},
+	{
+		"lng": 120.20569154660541,
+		"lat": 30.321460781761544
+	}
+	], [{
+		"lng": 120.07630850806497,
+		"lat": 30.438095684887397
+	},
+	{
+		"lng": 120.07630850806497,
+		"lat": 30.438095684887397
+	},
+	{
+		"lng": 119.96476082109066,
+		"lat": 30.343381840299294
+	}]];
 	//创建和初始化地图函数：
 	function initMap() {
 		map = new BMap.Map("map");
@@ -89,20 +99,18 @@
 		map.enableScrollWheelZoom();
 	};
 	initMap();
-
 	//添加覆盖物
 	function add_overlay() {
-		var data = os.value;
-		var pts = JSON.parse(data);
 		// console.log(JSON.parse(pts));
-		var lines = [];
-		pts.forEach(function (v, i) {
-			lines.push(new BMap.Point(v.lng, v.lat));
+		var polygons = [];
+		data.forEach(function (v, i) {
+			v.forEach(function (vq, iq) {
+				polygons.push(new BMap.Point(vq.lng, vq.lat));
+			})
+			var polygon = new BMap.Polygon(polygons);
+			map.addOverlay(polygon);
 		});
-
-		var polyline = new BMap.Polyline(lines, { strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5 });   //创建折线
-		map.addOverlay(polyline);   //增加折线
-		map.setViewport(lines);
+		map.setViewport(polygons);
 	};
 
 	//清除覆盖物

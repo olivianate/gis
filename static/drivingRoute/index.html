@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 	<title>地图展示</title>
 	<style type="text/css">
-		body, html {    
+		body,
+		html {
 			margin: 0;
 			height: 100%;
 			width: 100%;
 			position: absolute;
 		}
+
 		#map {
 			position: absolute;
 			top: 0;
@@ -20,16 +23,19 @@
 			width: 100%;
 			height: 100%;
 		}
-		.drawingToolbar{
+
+		.drawingToolbar {
 			z-index: 999;
 			position: absolute;
-			top: 10px;;
+			top: 10px;
+			;
 			left: 10px;
 			right: 10px;
 			width: 100%;
 			line-height: 1;
 		}
-		.drawingToolbar a{
+
+		.drawingToolbar a {
 			color: #666;
 			font-size: 14px;
 			background: #fff;
@@ -40,6 +46,7 @@
 		}
 	</style>
 </head>
+
 <body>
 	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
 	<script type="text/javascript" src="https://api.map.baidu.com/library/GeoUtils/1.2/src/GeoUtils_min.js"></script>
@@ -52,6 +59,7 @@
 		<a onclick="clearOverlay()">清除画布</a>
 	</div>
 </body>
+
 </html>
 <script>
 	var map;
@@ -59,15 +67,15 @@
 	var mkrIcon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
 
 	//创建和初始化地图函数：
-    function initMap(){
-		map = new BMap.Map("map"); 
-		map.centerAndZoom(new BMap.Point(120.137323,30.232054),12);
+	function initMap() {
+		map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(120.137323, 30.232054), 12);
 		map.enableScrollWheelZoom();
-    };
-    initMap();
+	};
+	initMap();
 	var points = [];
 
-	function getPoints(){
+	function getPoints() {
 		var res = "", minX = 120.137323, minY = 30.232054, x = 0, y = 0, pt = null;
 		for (var i = 0; i < 24; i++) {
 			x = minX + getRandom();
@@ -76,18 +84,18 @@
 			points.push(pt);
 			var marker = newMark(pt);
 			map.addOverlay(marker);
-			var label = newLabel(i+1);
+			var label = newLabel(i + 1);
 			marker.setLabel(label);
 		}
 		map.setViewport(points);
 	}
 
 	function getRandom() {
-        return Math.random() / 2;
+		return Math.random() / 2;
 	}
-	
-	function drivingSearch(){
-		if(points.length == 0){
+
+	function drivingSearch() {
+		if (points.length == 0) {
 			alert('请先生成驾车点!');
 			return
 		}
@@ -95,75 +103,75 @@
 		showPoly(pts);
 	}
 
-	function showPoly(list){
-       	var group = Math.floor( list.length /11 ) ;
-       	var mode = list.length % 11 ;
-	   	drivingRoute();
-        for(var i = 0; i < group; i++){
-		   var waypoints = list.slice(i*11+1, (i+1)*11);
-           driving.search(list[i*11], list[(i+1)*11-1], {waypoints:waypoints});//waypoints途经点集合，最多支持10个途经点，可以是名称也可以是坐标
-        }   
-        if( mode != 0){
-			var waypoints = list.slice(group*11,list.length-1);//
-			driving.search(list[group*11],list[list.length-1],{waypoints:waypoints});
-        }
+	function showPoly(list) {
+		var group = Math.floor(list.length / 11);
+		var mode = list.length % 11;
+		drivingRoute();
+		for (var i = 0; i < group; i++) {
+			var waypoints = list.slice(i * 11 + 1, (i + 1) * 11);
+			driving.search(list[i * 11], list[(i + 1) * 11 - 1], { waypoints: waypoints });//waypoints途经点集合，最多支持10个途经点，可以是名称也可以是坐标
+		}
+		if (mode != 0) {
+			var waypoints = list.slice(group * 11, list.length - 1);//
+			driving.search(list[group * 11], list[list.length - 1], { waypoints: waypoints });
+		}
 	}
 
-	function newMark(pt){
-		var icon = new BMap.Icon(mkrIcon, new BMap.Size(22, 32),{
-			anchor: new BMap.Size(10, 30), 
+	function newMark(pt) {
+		var icon = new BMap.Icon(mkrIcon, new BMap.Size(22, 32), {
+			anchor: new BMap.Size(10, 30),
 			imageOffset: new BMap.Size(0, 0)
 		});;
-		return new BMap.Marker(pt, {icon: icon});
+		return new BMap.Marker(pt, { icon: icon });
 	}
 
-	function newLabel(num){
+	function newLabel(num) {
 		var opts = {
 			offset: new BMap.Size(6, 5)    //设置文本偏移量
 		}
 		var label = new BMap.Label(num, opts);
 		label.setStyle({
-			color : "#fff",
-			fontSize : "12px",
-			height : "12px",
-			lineHeight : "12px",
-			border:'0',
-			background:'#24a1ff'
+			color: "#fff",
+			fontSize: "12px",
+			height: "12px",
+			lineHeight: "12px",
+			border: '0',
+			background: '#24a1ff'
 		});
 		return label
 	}
 
 	function drivingRoute() {
-		driving = new BMap.DrivingRoute(map,{ 
+		driving = new BMap.DrivingRoute(map, {
 			policy: BMAP_DRIVING_POLICY_LEAST_DISTANCE//最短距离
-		}); 
-		driving.setSearchCompleteCallback(function(results){
+		});
+		driving.setSearchCompleteCallback(function (results) {
 			onSearchComplete(results);
 		});
 	}
 
-	function onSearchComplete(results){
-		if (driving.getStatus() == BMAP_STATUS_SUCCESS){
+	function onSearchComplete(results) {
+		if (driving.getStatus() == BMAP_STATUS_SUCCESS) {
 			var plan = driving.getResults().getPlan(0);
 			var num = plan.getNumRoutes();
-			for(var j =0;j<num ;j++){
-				var pts= plan.getRoute(j).getPath();    //通过驾车实例，获得一系列点的数组
+			for (var j = 0; j < num; j++) {
+				var pts = plan.getRoute(j).getPath();    //通过驾车实例，获得一系列点的数组
 				var polyline = newLine(pts);//创建线路    
-				map.addOverlay(polyline); 
+				map.addOverlay(polyline);
 			}
 		}
 	}
-	
-	function newLine(pts){
-		var opts ={
+
+	function newLine(pts) {
+		var opts = {
 			strokeColor: "blue",
-			strokeWeight: 6, 
+			strokeWeight: 6,
 			strokeOpacity: 0.5
 		}
 		return new BMap.Polyline(pts, opts);
 	}
-	
-	function clearOverlay(){
+
+	function clearOverlay() {
 		map.clearOverlays();
 	}
 </script>

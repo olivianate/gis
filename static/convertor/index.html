@@ -57,19 +57,6 @@
 	<div id="map"></div>
 	<div class="drawingToolbar">
 		<div class="getCity">
-			<label for="">数据格式： [{ "lng": 119.96476082109066, "lat": 30.343381840299294 }, { "lng": 120.06767864200374, "lat": 30.301988799424937
-				}]
-			</label>
-			<textarea rows="10" cols="50" id="oldPoints">
-				[{
-						"lng": 119.96476082109066,
-						"lat": 30.343381840299294
-					},
-					{
-						"lng": 120.06767864200374,
-						"lat": 30.301988799424937
-					}]
-			</textarea>
 			<div>
 				<textarea rows="10" cols="50" id="NewPoints"></textarea>
 			</div>
@@ -83,9 +70,15 @@
 </html>
 <script>
 	var map;
-	var oldPoints = document.getElementById("oldPoints");
 	var newPoints = document.getElementById("NewPoints");
-
+	var data = [{
+		"lng": 119.96476082109066,
+		"lat": 30.343381840299294
+	},
+	{
+		"lng": 120.06767864200374,
+		"lat": 30.301988799424937
+	}];
 	//创建和初始化地图函数：
 	function initMap() {
 		map = new BMap.Map("map");
@@ -96,8 +89,7 @@
 
 	//添加覆盖物
 	function toTranslate() {
-		var value = oldPoints.value;
-		var data = JSON.parse(value);
+
 		var points = [];
 		data.forEach(function (v, i) {
 			points.push(new BMap.Point(v.lng, v.lat));

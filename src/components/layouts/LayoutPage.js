@@ -38,9 +38,9 @@ export default class LayoutPage extends PureComponent {
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key="/"><NavLink to="/" exact>首页</NavLink></Menu.Item>
-            <Menu.Item key="/component"><NavLink to="/component/sub1/scaleControl">解决方案</NavLink></Menu.Item>
+            <Menu.Item key="/component"><NavLink to="/component/sub1/scaleControl">地图工具</NavLink></Menu.Item>
             {/* <Menu.Item key="/transportation"><NavLink to="/transportation">物流案例</NavLink></Menu.Item> */}
-            <Menu.Item key="/console"><NavLink to="/console">地图工具</NavLink></Menu.Item>
+            <Menu.Item key="/tool"><NavLink to="/tool/tool1/drawmarker">数据展示</NavLink></Menu.Item>
             <Menu.Item key="/question"><NavLink to="/question">常见问题</NavLink></Menu.Item>
           </Menu> 
           </div> 

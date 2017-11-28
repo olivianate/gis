@@ -20,7 +20,7 @@ export default class App extends Component {
         <header className="homepage-header">
           <div className="header-core">
             <Link to="/counter" className={"logo"}>
-              解决方案
+              地图工具
             </Link>
           </div>
         </header>

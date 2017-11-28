@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { HashRouter, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../store";
-import { HomePage, ComponentPage, TransportationPage, QuestionPage  } from "./components.js";
+import { HomePage, ComponentPage, ToolPage, QuestionPage  } from "./components.js";
 
 export default class ROOT extends Component {
   render() {
@@ -14,7 +14,7 @@ export default class ROOT extends Component {
             <div>
               <Route path="/" component={HomePage} exact />
               <Route path="/component" component={ComponentPage} />
-              <Route path="/transportation" component={TransportationPage} />
+              <Route path="/tool" component={ToolPage} />
               <Route path="/question" component={QuestionPage} />
             </div>
           </HashRouter>

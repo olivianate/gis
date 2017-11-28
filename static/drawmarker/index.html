@@ -57,24 +57,6 @@
 	<div id="map"></div>
 	<div class="drawingToolbar">
 		<div class="getCity">
-			<label for="">数据格式： [[{ "lng": 119.96476082109066, "lat": 30.343381840299294 }, { "lng": 120.06767864200374, "lat": 30.301988799424937
-				}, { "lng": 120.20569154660541, "lat": 30.321460781761544 } ],[ { "lng": 120.07630850806497, "lat": 30.438095684887397
-				}, { "lng": 120.07630850806497, "lat": 30.438095684887397 }, { "lng": 119.96476082109066, "lat": 30.343381840299294 }]]
-			</label>
-			<textarea rows="10" cols="50" id="overlays">
-				[[{
-						"lng": 119.96476082109066,
-						"lat": 30.343381840299294
-					},
-					{
-						"lng": 120.06767864200374,
-						"lat": 30.301988799424937
-					},
-					{
-						"lng": 120.20569154660541,
-						"lat": 30.321460781761544
-					}]]
-			</textarea>
 			<div>
 				<input type="button" onclick="add_overlay();" value="添加覆盖物" />
 				<input type="button" onclick="remove_overlay();" value="删除覆盖物" />
@@ -86,10 +68,22 @@
 </html>
 <script>
 	var map;
-	var os = document.getElementById("overlays");
+	var icon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
+	var points = [{
+		"name": "国际大厦",
+		"lng": 120.223504,
+		"lat": 30.252822,
+		"address": "剧院路358～396号宏城国际大厦15层"
+	},
+	{
+		"name": "河坊街",
+		"lng": 120.177642,
+		"lat": 30.246269,
+		"address": "河坊街道高银街29号"
+	}];
 	//创建和初始化地图函数：
 	function initMap() {
-		map = new BMap.Map("map");
+		map = new BMap.Map("map", { enableMapClick: false });
 		map.centerAndZoom(new BMap.Point(120.251157, 30.251835), 13);
 		map.enableScrollWheelZoom();
 	};
@@ -97,20 +91,61 @@
 
 	//添加覆盖物
 	function add_overlay() {
-		var data = os.value;
-		var pts = JSON.parse(data);
-		// console.log(JSON.parse(pts));
-		var polygons = [];
-		pts.forEach(function (v, i) {
-			v.forEach(function (vq, iq) {
-				polygons.push(new BMap.Point(vq.lng, vq.lat));
-			})
-			var polygon = new BMap.Polygon(polygons);
-			map.addOverlay(polygon);
+		addMarker();
+	}
+	function addMarker() {
+		points.forEach(function (v, i) {
+			var marker;
+			marker = addNewMarker(v, icon);
+			map.addOverlay(marker);
 		});
-		map.setViewport(polygons);
 	};
 
+	function addNewMarker(data, icon) {
+		var point = new BMap.Point(data.lng, data.lat);
+		var icon = new BMap.Icon(icon, new BMap.Size(22, 32), {
+			anchor: new BMap.Size(10, 30),
+			imageOffset: new BMap.Size(0, 0)
+		});
+		var mkr = new BMap.Marker(point, { icon: icon });
+		mkr.data = data;
+		mkr.addEventListener("click", addClickHandler);
+		return mkr;
+	}
+
+	function addClickHandler(e) {
+		var mkr = e;
+		if (e.currentTarget) {
+			mkr = e.currentTarget;
+		}
+		mkr.setTop(true);
+		var pt = mkr.getPosition();
+		openInfo(mkr);
+	}
+	function openInfo(mkr) {
+		var data = mkr.data;
+		var infoWindow = createInfoWindow(data);
+		mkr.openInfoWindow(infoWindow);
+	}
+	function createInfoWindow(data) {
+		var content =
+			"<div>" +
+			"<p>地&emsp;址：" +
+			data.address +
+			"</p>" +
+			"</div>";
+		var opts = {
+			width: 0,
+			height: 0,
+			offset: {
+				width: -2,
+				height: -12
+			},
+			title: data.name
+		};
+		var infoWindow = new BMap.InfoWindow(content, opts);
+		return infoWindow;
+	}
 	//清除覆盖物
 	function remove_overlay() {
 		map.clearOverlays();

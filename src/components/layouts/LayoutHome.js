@@ -1,21 +1,24 @@
-import React, { PureComponent, Children, cloneElement } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu } from "antd";
-import "./LayoutHome.less";
+import React, { PureComponent, Children, cloneElement } from 'react';
+import {
+  Link,
+  NavLink,
+} from 'react-router-dom';
+import { Menu } from 'antd';
+import './LayoutPage.less';
 
-export default class LayoutHome extends PureComponent {
+export default class LayoutPage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      current: ""
-    };
+      current: ''
+    }
   }
 
-  componentDidMount() {
-    const { location } = this.props;
+  componentDidMount(){
+    const {location} = this.props;
     const reg = location.pathname.split(/\//)[1];
     this.setState({
-      current: "/" + reg || location.pathname
+      current: '/'+ reg || location.pathname
     });
   }
 
@@ -24,19 +27,27 @@ export default class LayoutHome extends PureComponent {
     const selectedKeys = [this.state.current];
 
     return (
-      <div className={"app"}>
-        <header className="page-header">
+      <div className={'app'}>
+        <header className="homepage-header">
           <div className="header-core">
-            <h2>关于地图的一些解决方案</h2>
-            <NavLink to="/" exact>
-              首页
-            </NavLink>
-            <NavLink to="/component/sub1/scaleControl">解决方案</NavLink>
-            <NavLink to="/console">地图工具</NavLink>
-            <NavLink to="/question">常见问题</NavLink>
-          </div>
+            <Link to="/" className={'logo'}>解决方案</Link>
+            <Menu
+            mode="horizontal"
+            onClick={this.handleClick}
+            selectedKeys={selectedKeys}
+            style={{ lineHeight: '64px' }}
+          >
+            <Menu.Item key="/"><NavLink to="/" exact>首页</NavLink></Menu.Item>
+            <Menu.Item key="/component"><NavLink to="/component/sub1/scaleControl">地图工具</NavLink></Menu.Item>
+            {/* <Menu.Item key="/transportation"><NavLink to="/transportation">物流案例</NavLink></Menu.Item> */}
+            <Menu.Item key="/tool"><NavLink to="/tool/tool1/drawmarker">数据展示</NavLink></Menu.Item>
+            <Menu.Item key="/question"><NavLink to="/question">常见问题</NavLink></Menu.Item>
+          </Menu> 
+          </div> 
         </header>
-        {Children.map(children, Comp => cloneElement(Comp))}
+        {
+          Children.map(children, Comp => cloneElement(Comp))
+        }
       </div>
     );
   }
