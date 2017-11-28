@@ -13,5 +13,5 @@ module.exports = {
 		"redux-thunk",
 		"classnames",
 	],
-	publicPath:"/gis/",
+	publicPath:"/",
 }
