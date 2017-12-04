@@ -6,7 +6,7 @@ import lowerFirst from 'lodash/lowerFirst';
 import '../app.less';
 import React,{ Component } from 'react';
 import PlayGround from '../partials/PlayGround';
-import pages from './componentList';
+import pages from '../../../static/index';
 import Layout from '../layouts/Layout';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
@@ -70,7 +70,7 @@ export default class App extends Component {
                   onOpenChange={this.onOpenChange}
                   style={{ width: 240 }}
                 >
-                  {this.renderTreeNodes(pages.data)}
+                  {this.renderTreeNodes(pages.data.component)}
                 </Menu>
               </div>
               <Route
