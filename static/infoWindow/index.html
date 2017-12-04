@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body,
+		html {
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			font-size: 14px;
+		}
+
+		/**
+		*修改地图infowindow样式
+		*/
+		
+		.BMap_pop div:nth-child(1) div:nth-child(1) {
+			border-radius: 7px 0 0 0;
+		}
+
+		.BMap_pop div:nth-child(3) div:nth-child(1) {
+			border-radius: 0 7px 0 0;
+		}
+
+		.BMap_pop div:nth-child(5) div:nth-child(1) {
+			border-radius: 0 0 0 7px;
+		}
+
+		.BMap_pop div:nth-child(7) div:nth-child(1) {
+			border-radius: 0 0 7px 0;
+		}
+
+		.BMap_pop div:nth-child(8) img {
+			display: none;
+		}
+
+		.BMap_pop div:nth-child(8) {
+			max-height: 40px;
+			height: 40px!important;
+			background: url('http://image.tf56.com/dfs/group1/M00/41/7C/CiFBClokrmSAEtPXAABZohwMOmY448.png') -204px -691px;
+		}
+
+		.BMap_shadow {
+			display: none;
+		}
+
+		.BMap_pop>img {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<div id="map"></div>
+</body>
+
+</html>
+<script>
+	var map;
+	var icon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
+	var points = [{
+		"name": "北京天安门",
+		"lng": 116.403694,
+		"lat": 39.916042,
+		"address": "北京市东城区东长安街",
+		"desc": "天安门坐落在中国北京市中心,故宫的南侧,与天安门广场隔长安街相望,是清朝皇城的大门..."
+	}];
+	//创建和初始化地图函数：
+	function initMap() {
+		map = new BMap.Map("map", { enableMapClick: false });
+		map.centerAndZoom(new BMap.Point(116.404125, 39.91488), 13);
+		map.enableScrollWheelZoom();
+
+		addMarker();
+	};
+	initMap();
+
+	//添加覆盖物
+	function addMarker() {
+		points.forEach(function (v, i) {
+			var marker;
+			marker = addNewMarker(v, icon);
+			map.addOverlay(marker);
+		});
+	};
+
+	function addNewMarker(data, icon) {
+		var point = new BMap.Point(data.lng, data.lat);
+		var icon = new BMap.Icon(icon, new BMap.Size(22, 32), {
+			anchor: new BMap.Size(10, 30),
+			imageOffset: new BMap.Size(0, 0)
+		});
+		var mkr = new BMap.Marker(point, { icon: icon });
+		mkr.data = data;
+		mkr.addEventListener("click", addClickHandler);
+		return mkr;
+	}
+
+	function addClickHandler(e) {
+		var mkr = e;
+		if (e.currentTarget) {
+			mkr = e.currentTarget;
+		}
+		mkr.setTop(true);
+		var pt = mkr.getPosition();
+		openInfo(mkr);
+	}
+	function openInfo(mkr) {
+		var data = mkr.data;
+		var infoWindow = createInfoWindow(data);
+		mkr.openInfoWindow(infoWindow);
+	}
+	function createInfoWindow(data) {
+		var content =
+			"<div>" +
+			"<p>地&emsp;址：" +
+			data.address +
+			"</p>" +
+			"</div>";
+		var opts = {
+			width: 300,
+			height: 0,
+			offset: {
+				width: -16,
+				height: -20
+			},
+			title: data.name
+		};
+		var infoWindow = new BMap.InfoWindow(content, opts);
+		return infoWindow;
+	}
+	//清除覆盖物
+	function remove_overlay() {
+		map.clearOverlays();
+	}
+
+</script>

@@ -1,7 +1,7 @@
 export default {
   data: [{
     key: 'tool1',
-    title: '点,折线,多边形',
+    title: '点、路线、区域',
     page: [
       {
         name: 'drawmarker',
@@ -18,7 +18,7 @@ export default {
       {
         name: 'drawpolygon',
         icon: 'drawpolygon',
-        title: '绘制多边形',
+        title: '绘制区域',
         parent: 'tool1',
       }],
   },{

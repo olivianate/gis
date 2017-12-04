@@ -5,6 +5,11 @@ import {
 } from 'react-router-dom';
 import { Menu } from 'antd';
 import './Layout.less';
+import IconLogo from '../../images/logo.svg';
+const IconProps = {
+  width: 64,
+  height: 64,
+};
 
 export default class Layout extends PureComponent {
   constructor(props) {
@@ -30,7 +35,7 @@ export default class Layout extends PureComponent {
       <div className={'app'}>
         <header className="page-header">
           <div className="header-core">
-            <Link to="/" className={'logo'}>解决方案</Link>
+            <Link to="/" className={'logo'}><IconLogo {...IconProps} /></Link>
             <Menu
             mode="horizontal"
             onClick={this.handleClick}

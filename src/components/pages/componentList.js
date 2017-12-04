@@ -49,6 +49,17 @@ export default {
         title: '创建多边形,圆',
         parent: 'sub2',
       }],
+  },
+  {
+    key: 'sub3',
+    title: '信息窗口',
+    page: [
+      {
+        name: 'infoWindow',
+        icon: 'infoWindow',
+        title: '信息窗口皮肤设置',
+        parent: 'sub3',
+      }],
   },{
     key: 'sub4',
     title: '驾车路线规划',

@@ -51,6 +51,7 @@
     "precss": "^1.4.0",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^3.0.0-beta.6",
+    "react-svg-loader": "^2.1.0",
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",

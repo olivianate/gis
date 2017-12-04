@@ -10,12 +10,12 @@ import Frame from "./Frame";
 import CodeMirror from "./Codemirror";
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/mode/xml/xml";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import { Icon } from "antd";
 import copy from "copy-to-clipboard";
 import defaultRepl from "!html-loader!../../../static/temple/index.html";
-import styles from "./PlayGround.less";
-import { debug } from "util";
+import "./PlayGround.less";
+import "../pages/markdown.less";
 
 export default class PlayGround extends Component {
   static defaultProps = {
@@ -26,6 +26,8 @@ export default class PlayGround extends Component {
   };
 
   state = {
+    textclass: false, //初始代码
+    article: "", //说明
     wrapclass: "open",
     frameTemlp: "", //frame
     repl: "", //codemirror
@@ -42,15 +44,33 @@ export default class PlayGround extends Component {
       const repl = await import(`!html-loader!../../../static/${
         componentName
       }/index.html`);
+
       this.setState({
-        repl
+        repl,
       });
       this.executeCode(repl);
+      
+      var _this = this;
+      import(`../../../static/${
+        componentName
+      }/desc.md`).then(function(data) {
+        _this.setState({
+          article: data,
+        });
+      });
+      
     } catch (e) {
       this.setState({
         repl: defaultRepl
       });
       this.executeCode(defaultRepl);
+
+      var _this = this;
+      import("../../../static/temple/desc.md").then(function(data) {
+        _this.setState({
+          article: data
+        });
+      });
     }
   }
 
@@ -91,8 +111,14 @@ export default class PlayGround extends Component {
     this.loadRepl();
   };
 
+  codeDesc = () => {
+    this.setState({
+      textclass: !this.state.textclass
+    });
+  };
+
   render() {
-    const { repl, frameTemlp } = this.state;
+    const { repl, frameTemlp, textclass, article } = this.state;
     const codeMirrorProps = {
       value: repl,
       onChange: newCode => {
@@ -116,21 +142,36 @@ export default class PlayGround extends Component {
     return (
       <div className={codeClass}>
         <div className={"code-wrap"}>
-          {/* <div className="code-desc">123</div> */}
           <div className={"code-open"} onClick={this.handleClickTrgger}>
             <Icon type={iconType} style={{ fontSize: 14, color: "#08c" }} />
           </div>
           <div className={"code-area"}>
-            <div className={"code-bar"}>
-              源代码编辑器
-              <a onClick={this.codeDesc}>文档</a>
-              <a onClick={this.codeRestore}>还原</a>
-              <a onClick={this.codeRun}>运行</a>
-              <a onClick={this.copyCode}>复制</a>
-            </div>
-            <div className={"code-con"}>
-              <CodeMirror {...codeMirrorProps} />
-            </div>
+            {!textclass ? (
+              <div>
+                <div className={"code-bar"}>
+                  源代码编辑器
+                  <a onClick={this.codeDesc}>说明</a>
+                  <a onClick={this.codeRestore}>还原</a>
+                  <a onClick={this.codeRun}>运行</a>
+                  <a onClick={this.copyCode}>复制</a>
+                </div>
+                <div className={"code-con"}>
+                  <CodeMirror {...codeMirrorProps} />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className={"code-bar"}>
+                  <a onClick={this.codeDesc}>代码</a>
+                </div>
+                <div className={"code-con"}>
+                  <article
+                    className={classnames("code-desc", "markdown")}
+                    dangerouslySetInnerHTML={{ __html: article }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className={"code-map"} ref={node => (this.mount = node)}>

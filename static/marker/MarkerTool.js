@@ -125,7 +125,7 @@ if (typeof BMapLib._toolInUse == "undefined") {
 			this._map = d;
 			this._opts = {
 				icon: b.SYS_ICONS[0],
-				followText: "点击地图添加标注",
+				followText: "鐐瑰嚮鍦板浘娣诲姞鏍囨敞",
 				autoClose: true
 			};
 			a.extend(this._opts, c);
@@ -207,10 +207,9 @@ if (typeof BMapLib._toolInUse == "undefined") {
 		if (!c._isOpen) {
 			return
         }
-        c._label = new BMap.Label('添加一个标注',{
+        c._label = new BMap.Label('娣诲姞涓€涓爣娉�',{
             offset: new BMap.Size(25, 10)
-		});
-		
+        });
         c._label.setStyle({
             backgroundColor:'#000',
             position:'relative',
@@ -225,7 +224,7 @@ if (typeof BMapLib._toolInUse == "undefined") {
 			c._followMarker.setIcon(c._opts.icon);
             c._followMarker.setPosition(e);
             
-            //鼠标跟随
+            //榧犳爣璺熼殢
             var gc = new BMap.Geocoder();
             gc.getLocation(e, function(rs) {
                 var address = rs.address;
@@ -242,11 +241,11 @@ if (typeof BMapLib._toolInUse == "undefined") {
 			var e = new BMap.Marker(h, {
                 icon: c._opts.icon,
             });
-            e.address = c._label.content;//地址储存
+            e.address = c._label.content;//鍦板潃鍌ㄥ瓨
 			var data = {
-				address:e.address
+				address:e.address,
 			};
-			e.data = data;//数据储存
+			e.data = data;//鏁版嵁鍌ㄥ瓨
 			c._map.addOverlay(e);
 			var f = new a.lang.Event("onmarkend");
 			f.marker = e;
@@ -257,6 +256,79 @@ if (typeof BMapLib._toolInUse == "undefined") {
 		};
 		c._map.addEventListener("click", c._clickHandler)
 	};
-	b.CUR_IMG = "https://api.map.baidu.com/library/MarkerTool/1.2/src/images/transparent.cur";
-	b.ICON_IMG = "https://api.map.baidu.com/library/MarkerTool/1.2/src/images/us_mk_icon.png";
+	b.CUR_IMG = "http://api.map.baidu.com/library/MarkerTool/1.2/src/images/transparent.cur";
+	b.ICON_IMG = "http://api.map.baidu.com/library/MarkerTool/1.2/src/images/us_mk_icon.png";
+	b.SYS_ICONS = [new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(0, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(-23, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(-46, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(-69, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(-92, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(6, 21),
+		imageOffset: new BMap.Size(-115, 0)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(0, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-23, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-46, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-69, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-92, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(23, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-115, -21)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(0, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(-23, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(-46, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(-69, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(-92, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(21, 21), {
+		anchor: new BMap.Size(1, 21),
+		imageOffset: new BMap.Size(-115, -46)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(25, 25), {
+		anchor: new BMap.Size(12, 25),
+		imageOffset: new BMap.Size(0, -67)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(25, 25), {
+		anchor: new BMap.Size(12, 25),
+		imageOffset: new BMap.Size(-25, -67)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(24, 25), {
+		anchor: new BMap.Size(12, 25),
+		imageOffset: new BMap.Size(-50, -67)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(25, 25), {
+		anchor: new BMap.Size(12, 25),
+		imageOffset: new BMap.Size(-75, -67)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(25, 25), {
+		anchor: new BMap.Size(12, 25),
+		imageOffset: new BMap.Size(-100, -67)
+	}), new BMap.Icon(b.ICON_IMG, new BMap.Size(19, 25), {
+		anchor: new BMap.Size(9, 25),
+		imageOffset: new BMap.Size(-125, -67)
+	})]
 })();
