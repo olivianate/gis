@@ -1,28 +1,25 @@
-import React, { PureComponent, Children, cloneElement } from 'react';
-import {
-  Link,
-  NavLink,
-} from 'react-router-dom';
-import { Menu } from 'antd';
-import './LayoutPage.less';
-import IconLogo from '../../images/logo.svg';
+import React, { PureComponent, Children, cloneElement } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Menu } from "antd";
+import "./LayoutPage.less";
+import IconLogo from "../../images/logo.svg";
 const IconProps = {
   width: 64,
-  height: 64,
+  height: 64
 };
 export default class LayoutPage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      current: ''
-    }
+      current: ""
+    };
   }
 
-  componentDidMount(){
-    const {location} = this.props;
+  componentDidMount() {
+    const { location } = this.props;
     const reg = location.pathname.split(/\//)[1];
     this.setState({
-      current: '/'+ reg || location.pathname
+      current: "/" + reg || location.pathname
     });
   }
 
@@ -31,27 +28,37 @@ export default class LayoutPage extends PureComponent {
     const selectedKeys = [this.state.current];
 
     return (
-      <div className={'app'}>
+      <div className={"app"}>
         <header className="homepage-header">
           <div className="header-core">
-            <Link to="/" className={'logo'}><IconLogo {...IconProps} /></Link>
+            <Link to="/" className={"logo"}>
+              <IconLogo {...IconProps} />
+            </Link>
             <Menu
-            mode="horizontal"
-            onClick={this.handleClick}
-            selectedKeys={selectedKeys}
-            style={{ lineHeight: '64px' }}
-          >
-            <Menu.Item key="/"><NavLink to="/" exact>首页</NavLink></Menu.Item>
-            <Menu.Item key="/component"><NavLink to="/component/sub1/scaleControl">解决方案</NavLink></Menu.Item>
-            {/* <Menu.Item key="/transportation"><NavLink to="/transportation">物流案例</NavLink></Menu.Item> */}
-            <Menu.Item key="/tool"><NavLink to="/tool/tool1/drawmarker">数据展示</NavLink></Menu.Item>
-            <Menu.Item key="/question"><NavLink to="/question">常见问题</NavLink></Menu.Item>
-          </Menu> 
-          </div> 
+              mode="horizontal"
+              onClick={this.handleClick}
+              selectedKeys={selectedKeys}
+              style={{ lineHeight: "64px" }}
+            >
+              <Menu.Item key="/">
+                <NavLink to="/" exact>
+                  首页
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/component">
+                <NavLink to="/component/sub1/scaleControl">解决方案</NavLink>
+              </Menu.Item>
+              {/* <Menu.Item key="/transportation"><NavLink to="/transportation">物流案例</NavLink></Menu.Item> */}
+              <Menu.Item key="/tool">
+                <NavLink to="/tool/tool1/drawmarker">数据展示</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/question">
+                <NavLink to="/question">常见问题</NavLink>
+              </Menu.Item>
+            </Menu>
+          </div>
         </header>
-        {
-          Children.map(children, Comp => cloneElement(Comp))
-        }
+        {Children.map(children, Comp => cloneElement(Comp))}
       </div>
     );
   }

@@ -43,10 +43,9 @@
 			margin-bottom: 10px;
 		}
 
-		a {
+		.info-wrap a {
 			cursor: pointer;
-			display: block;
-			margin-bottom: 10px;
+			color: #108ee9;
 		}
 	</style>
 </head>
@@ -70,17 +69,22 @@
 	var map;
 	var icon = 'http://image.tf56.com/dfs/group1/M00/39/80/CiFBClnlv4qAFihjAAACvsfc7-g019.png';
 	var points = [{
+		"previewpoiid": '1',
 		"name": "国际大厦",
 		"lng": 120.223504,
 		"lat": 30.252822,
 		"address": "剧院路358～396号宏城国际大厦15层"
 	},
 	{
+		"previewpoiid": '2',
 		"name": "河坊街",
 		"lng": 120.177642,
 		"lat": 30.246269,
 		"address": "河坊街道高银街29号"
 	}];
+	var currentOverlay;//
+
+
 	//创建和初始化地图函数：
 	function initMap() {
 		map = new BMap.Map("map", { enableMapClick: false });
@@ -113,27 +117,50 @@
 		return mkr;
 	}
 
+
 	function addClickHandler(e) {
 		var mkr = e;
 		if (e.currentTarget) {
 			mkr = e.currentTarget;
 		}
+		currentOverlay = mkr;
 		mkr.setTop(true);
 		var pt = mkr.getPosition();
-		openInfo(mkr);
+		openInfo(mkr, 'open');
 	}
-	function openInfo(mkr) {
-		var data = mkr.data;
-		var infoWindow = createInfoWindow(data);
-		mkr.openInfoWindow(infoWindow);
+	function openInfo(mkr, type) {
+		var data = mkr.data, infowin;
+		if (type == 'open') {
+			infowin = createInfoWindow(data);
+		} else if (type == 'edit') {
+			infowin = editInfoWindow(data);
+		}
+		mkr.openInfoWindow(infowin);
+	}
+
+	function addInfoWindowEvent(infoWindow) {
+		infoWindow.addEventListener('open', function () {
+			$('.editBtn').on('click', function () {
+				openInfo(currentOverlay, 'edit');
+			});
+
+			$('.saveBtn').on('click', function () {
+				var address = $('.addressInput').val();
+				currentOverlay.data.address = address;
+				openInfo(currentOverlay, 'open');
+			});
+		});
 	}
 	function createInfoWindow(data) {
 		var content =
-			"<div>" +
-			"<p>地&emsp;址：" +
+			'<div class="info-wrap">' +
+			'<p>地&emsp;址：' +
 			data.address +
-			"</p>" +
-			"</div>";
+			'</p>' +
+			'<p>' +
+			'<a class="editBtn" data-previewpoiid="' + data.previewpoiid + '">编辑</a>' +
+			'</p>' +
+			'</div>';
 		var opts = {
 			width: 0,
 			height: 0,
@@ -144,8 +171,36 @@
 			title: data.name
 		};
 		var infoWindow = new BMap.InfoWindow(content, opts);
+		addInfoWindowEvent(infoWindow);
 		return infoWindow;
 	}
+
+	function editInfoWindow(data) {
+		var content =
+			'<div class="info-wrap">' +
+			'<p>地&emsp;址：<input class="addressInput" value= "' +
+			data.address +
+			'" /></p>' +
+			'<p>' +
+			'<a class="saveBtn" data-previewpoiid="' + data.previewpoiid + '">保存</a>' +
+			'</p>' +
+			'</div>';
+		var opts = {
+			width: 0,
+			height: 0,
+			offset: {
+				width: -2,
+				height: -12
+			},
+			title: data.name
+		};
+		var infoWindow = new BMap.InfoWindow(content, opts);
+		addInfoWindowEvent(infoWindow);
+		return infoWindow;
+	}
+
+
+
 	//清除覆盖物
 	function remove_overlay() {
 		map.clearOverlays();

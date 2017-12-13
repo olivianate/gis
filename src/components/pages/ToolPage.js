@@ -1,23 +1,19 @@
-import {
-  Route,
-  NavLink,
-} from 'react-router-dom';
-import lowerFirst from 'lodash/lowerFirst';
-import '../app.less';
-import React,{ Component } from 'react';
-import PlayGround from '../partials/PlayGround';
-import pages from '../../../static/index';
-import Layout from '../layouts/Layout';
-import { Menu, Icon } from 'antd';
+import { Route, NavLink } from "react-router-dom";
+import lowerFirst from "lodash/lowerFirst";
+import "../app.less";
+import React, { Component } from "react";
+import PlayGround from "../partials/PlayGround";
+import pages from "../../../static/index";
+import Layout from "../layouts/Layout";
+import { Menu, Icon } from "antd";
 const SubMenu = Menu.SubMenu;
 
 export default class App extends Component {
+  rootSubmenuKeys = ["tool1"];
 
-  rootSubmenuKeys = ['tool1'];
-  
   state = {
-    openKeys: ['tool1'],
-  }
+    openKeys: ["tool1"]
+  };
 
   // componentWillMount() {
   //   const {location} = this.props;
@@ -26,67 +22,70 @@ export default class App extends Component {
   //   });
   // }
 
-  onOpenChange = (openKeys) => {
-    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+  onOpenChange = openKeys => {
+    const latestOpenKey = openKeys.find(
+      key => this.state.openKeys.indexOf(key) === -1
+    );
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
     } else {
       this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
+        openKeys: latestOpenKey ? [latestOpenKey] : []
       });
     }
-  }
+  };
 
-
-  renderTreeNodes = (data) => {
-    return data.map((item) => {
+  renderTreeNodes = data => {
+    return data.map(item => {
       if (item.page) {
         return (
           <SubMenu key={item.key} title={<span>{item.title}</span>}>
-            {item.page.map((d) => {
+            {item.page.map(d => {
               return (
                 <Menu.Item key={d.name}>
-                  <NavLink to={`/tool/${d.parent}/${lowerFirst(d.name)}`}><span className="nav-text">{d.title}</span></NavLink>
+                  <NavLink to={`/tool/${d.parent}/${lowerFirst(d.name)}`}>
+                    <span className="nav-text">{d.title}</span>
+                  </NavLink>
                 </Menu.Item>
-              )
+              );
             })}
           </SubMenu>
         );
       }
       return <SubMenu {...item} />;
     });
-  }
+  };
 
-  render (){
-    const {...props} = this.props;
+  render() {
+    const { ...props } = this.props;
     return (
       <Layout {...props}>
         <div className={"page-wrapper"}>
           <div className={"content-sidebar"}>
             <div className={"aside"}>
-                <Menu
-                  mode="inline"
-                  openKeys={this.state.openKeys}
-                  onOpenChange={this.onOpenChange}
-                  style={{ width: 240 }}
-                >
-                  {this.renderTreeNodes(pages.data.tool)}
-                </Menu>
-              </div>
-              <Route
-                path="/tool/:parent/:name"
-                component={(props) => {
-                  const { match } = props;
-                  return (
-                    <div className={"demo"}>
-                      {<PlayGround componentName={match.params.name} />}
-                    </div>
-                  );
-                }}
-              />
+              <Menu
+                mode="inline"
+                openKeys={this.state.openKeys}
+                onOpenChange={this.onOpenChange}
+                style={{ width: 240 }}
+              >
+                {this.renderTreeNodes(pages.data.tool)}
+              </Menu>
+            </div>
+            <Route
+              path="/tool/:parent/:name"
+              component={props => {
+                const { match } = props;
+                return (
+                  <div className={"demo"}>
+                    {<PlayGround componentName={match.params.name} />}
+                  </div>
+                );
+              }}
+            />
           </div>
         </div>
       </Layout>
-    )
+    );
   }
-};
+}

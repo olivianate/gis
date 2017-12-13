@@ -41,24 +41,19 @@ export default class PlayGround extends Component {
   async loadRepl() {
     const { componentName } = this.props;
     try {
-      const repl = await import(`!html-loader!../../../static/${
-        componentName
-      }/index.html`);
+      const repl = await import(`!html-loader!../../../static/${componentName}/index.html`);
 
       this.setState({
-        repl,
+        repl
       });
       this.executeCode(repl);
-      
+
       var _this = this;
-      import(`../../../static/${
-        componentName
-      }/desc.md`).then(function(data) {
+      import(`../../../static/${componentName}/desc.md`).then(function(data) {
         _this.setState({
-          article: data,
+          article: data
         });
       });
-      
     } catch (e) {
       this.setState({
         repl: defaultRepl

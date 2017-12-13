@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import DocumentContext from './DocumentContext';
-import { debug } from 'util';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import DocumentContext from "./DocumentContext";
+import { debug } from "util";
 
-const hasConsole = typeof window !== 'undefined' && window.console;
+const hasConsole = typeof window !== "undefined" && window.console;
 const noop = () => {};
 let swallowInvalidHeadWarning = noop;
 let resetWarnings = noop;
@@ -15,12 +15,13 @@ if (hasConsole) {
   // works. We swallow React's validateDOMNesting warning if that is the
   // message to avoid confusion
   swallowInvalidHeadWarning = () => {
-    console.error = (msg) => {  // eslint-disable-line no-console
+    console.error = msg => {
+      // eslint-disable-line no-console
       if (/<head>/.test(msg)) return;
       originalError.call(console, msg);
     };
   };
-  resetWarnings = () => (console.error = originalError);  // eslint-disable-line no-console
+  resetWarnings = () => (console.error = originalError); // eslint-disable-line no-console
 }
 
 export default class Frame extends Component {
@@ -48,7 +49,8 @@ export default class Frame extends Component {
     mountTarget: undefined,
     contentDidMount: () => {},
     contentDidUpdate: () => {},
-    initialContent: '<!DOCTYPE html><html><head></head><body><div class="frame-root"></div></body></html>'
+    initialContent:
+      '<!DOCTYPE html><html><head></head><body><div class="frame-root"></div></body></html>'
   };
 
   constructor(props, context) {
@@ -90,8 +92,8 @@ export default class Frame extends Component {
       return;
     }
     const doc = this.getDoc();
-    if (doc && doc.readyState === 'complete') {
-      if (doc.querySelector('div') === null) {
+    if (doc && doc.readyState === "complete") {
+      if (doc.querySelector("div") === null) {
         this._setInitialContent = false;
       }
       const win = doc.defaultView || doc.parentView;
@@ -106,20 +108,27 @@ export default class Frame extends Component {
       );
 
       // if (initialRender) {
-        doc.open('text/html', 'replace');
-        doc.write(this.props.initialContent);
-        doc.close();
-        this._setInitialContent = true;
+      doc.open("text/html", "replace");
+      doc.write(this.props.initialContent);
+      doc.close();
+      this._setInitialContent = true;
       // }
 
       swallowInvalidHeadWarning();
 
       // unstable_renderSubtreeIntoContainer allows us to pass this component as
       // the parent, which exposes context to any child components.
-      const callback = initialRender ? this.props.contentDidMount : this.props.contentDidUpdate;
+      const callback = initialRender
+        ? this.props.contentDidMount
+        : this.props.contentDidUpdate;
       const mountTarget = this.getMountTarget();
 
-      ReactDOM.unstable_renderSubtreeIntoContainer(this, contents, mountTarget, callback);
+      ReactDOM.unstable_renderSubtreeIntoContainer(
+        this,
+        contents,
+        mountTarget,
+        callback
+      );
       resetWarnings();
     } else {
       setTimeout(this.renderFrameContents.bind(this), 0);
@@ -136,6 +145,6 @@ export default class Frame extends Component {
     delete props.mountTarget;
     delete props.contentDidMount;
     delete props.contentDidUpdate;
-    return (<iframe {...props} />);
+    return <iframe {...props} />;
   }
 }

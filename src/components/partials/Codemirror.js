@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import className from 'classnames';
-import isEqual from 'lodash/isEqual';
-import codemirror from 'codemirror';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import className from "classnames";
+import isEqual from "lodash/isEqual";
+import codemirror from "codemirror";
 
-import './Codemirror.less';
+import "./Codemirror.less";
 
 function normalizeLineEndings(str) {
   if (!str) return str;
-  return str.replace(/\r\n|\r/g, '\n');
+  return str.replace(/\r\n|\r/g, "\n");
 }
 
 export default class CodeMirror extends Component {
   static defaultProps = {
-    preserveScrollPosition: false,
-  }
+    preserveScrollPosition: false
+  };
   static propTypes = {
     autoFocus: PropTypes.bool,
     className: PropTypes.any,
@@ -28,23 +28,23 @@ export default class CodeMirror extends Component {
     options: PropTypes.object,
     path: PropTypes.string,
     value: PropTypes.string,
-    preserveScrollPosition: PropTypes.bool,
-  }
+    preserveScrollPosition: PropTypes.bool
+  };
   state = {
-    isFocused: false,
-  }
+    isFocused: false
+  };
   componentDidMount() {
     const codeMirrorInstance = this.getCodeMirrorInstance();
     this.codeMirror = codeMirrorInstance.fromTextArea(
       this.textareaNode,
-      this.props.options,
+      this.props.options
     );
-    this.codeMirror.on('change', this.codemirrorValueChanged);
-    this.codeMirror.on('cursorActivity', this.cursorActivity);
-    this.codeMirror.on('focus', this.focusChanged.bind(this, true));
-    this.codeMirror.on('blur', this.focusChanged.bind(this, false));
+    this.codeMirror.on("change", this.codemirrorValueChanged);
+    this.codeMirror.on("cursorActivity", this.cursorActivity);
+    this.codeMirror.on("focus", this.focusChanged.bind(this, true));
+    this.codeMirror.on("blur", this.focusChanged.bind(this, false));
     // this.codeMirror.on('scroll', this.scrollChanged);
-    this.codeMirror.setValue(this.props.defaultValue || this.props.value || '');
+    this.codeMirror.setValue(this.props.defaultValue || this.props.value || "");
   }
   componentWillReceiveProps(nextProps) {
     if (
@@ -59,13 +59,13 @@ export default class CodeMirror extends Component {
         this.codeMirror.setValue(nextProps.value);
         this.codeMirror.scrollTo(
           prevScrollPosition.left,
-          prevScrollPosition.top,
+          prevScrollPosition.top
         );
       } else {
         this.codeMirror.setValue(nextProps.value);
       }
     }
-    if (typeof nextProps.options === 'object') {
+    if (typeof nextProps.options === "object") {
       for (const optionName in nextProps.options) {
         if (nextProps.options.hasOwnProperty(optionName)) {
           this.setOptionIfChanged(optionName, nextProps.options[optionName]);
@@ -98,26 +98,26 @@ export default class CodeMirror extends Component {
   }
   focusChanged(focused) {
     this.setState({
-      isFocused: focused,
+      isFocused: focused
     });
     this.props.onFocusChange && this.props.onFocusChange(focused);
   }
-  cursorActivity = (cm) => {
+  cursorActivity = cm => {
     this.props.onCursorActivity && this.props.onCursorActivity(cm);
-  }
+  };
   scrollChanged(cm) {
     this.props.onScroll && this.props.onScroll(cm.getScrollInfo());
   }
   codemirrorValueChanged = (doc, change) => {
-    if (this.props.onChange && change.origin !== 'setValue') {
+    if (this.props.onChange && change.origin !== "setValue") {
       this.props.onChange(doc.getValue(), change);
     }
-  }
+  };
   render() {
     const editorClassName = className(
-      'ReactCodeMirror',
-      this.state.isFocused ? 'ReactCodeMirror--focused' : null,
-      this.props.className,
+      "ReactCodeMirror",
+      this.state.isFocused ? "ReactCodeMirror--focused" : null,
+      this.props.className
     );
     return (
       <div className={editorClassName}>

@@ -24,36 +24,6 @@ export default {
             parent: "tool1"
           }
         ]
-      },
-      {
-        key: "tool3",
-        title: "驾车路线规划",
-        page: [
-          {
-            name: "policy",
-            icon: "policy",
-            title: "驾车策略比对",
-            parent: "tool3"
-          },
-          {
-            name: "drivingRoute",
-            icon: "drivingRoute",
-            title: "驾车起终点/途径点",
-            parent: "tool3"
-          }
-        ]
-      },
-      {
-        key: "tool2",
-        title: "坐标转换",
-        page: [
-          {
-            name: "convertor",
-            icon: "convertor",
-            title: "坐标转换",
-            parent: "tool2"
-          }
-        ]
       }
     ],
     component: [
@@ -120,6 +90,36 @@ export default {
             icon: "infoWindow",
             title: "信息窗口皮肤设置",
             parent: "sub3"
+          }
+        ]
+      },
+      {
+        key: "sub4",
+        title: "驾车路线规划",
+        page: [
+          {
+            name: "policy",
+            icon: "policy",
+            title: "驾车策略比对",
+            parent: "sub4"
+          },
+          {
+            name: "drivingRoute",
+            icon: "drivingRoute",
+            title: "驾车起终点/途径点",
+            parent: "sub4"
+          }
+        ]
+      },
+      {
+        key: "sub5",
+        title: "坐标转换",
+        page: [
+          {
+            name: "convertor",
+            icon: "convertor",
+            title: "坐标转换",
+            parent: "sub5"
           }
         ]
       }

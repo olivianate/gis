@@ -5,18 +5,18 @@ import "./markdown.less";
 // import questionDoc from "!html-loader!../doc/question.md";
 
 export default class App extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      article: '',
-    }
+      article: ""
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     var _this = this;
-    import('../doc/question.md').then(function(data){
-    _this.setState({article:data});
-    })
+    import("../doc/question.md").then(function(data) {
+      _this.setState({ article: data });
+    });
   }
 
   render() {
