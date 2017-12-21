@@ -10,6 +10,7 @@
 | src | Contain all of source files |
 | src/index | app entrance |
 | src/components | components folder. |
+| jsdemo | jsdemo files are here. |
 | dist | build files are here. |
 | config | gis's configeration file. |
 
