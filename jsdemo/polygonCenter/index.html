@@ -35,6 +35,19 @@
 </html>
 <script>
 	var map;
+	var points = [{
+		'lng': 120.215022,
+		'lat': 30.271491
+	},{
+		'lng': 120.271363,
+		'lat': 30.250029
+	},{
+		'lng': 120.208123,
+		'lat': 30.201599
+	},{
+		'lng': 120.178802,
+		'lat': 30.251028
+	}];
 	//创建和初始化地图函数：
 	function initMap() {
 		map = new BMap.Map("map");
@@ -45,10 +58,9 @@
 
 	//显示范围
 	var pts = [];
-	pts.push(new BMap.Point(120.215022, 30.271491));
-	pts.push(new BMap.Point(120.271363, 30.250029));
-	pts.push(new BMap.Point(120.208123, 30.201599));
-	pts.push(new BMap.Point(120.178802, 30.251028));
+	points.forEach(function(v,i){
+		pts.push(new BMap.Point(v.lng, v.lat));
+	});
 	var opts = {
 		strokeColor: "rgb(255, 0, 0)",    //边线颜色。
 		fillColor: "rgb(227, 0, 0)",      //填充颜色。当参数为空时，圆形将没有填充效果。
