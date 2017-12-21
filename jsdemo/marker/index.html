@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -41,6 +42,49 @@
 			display: inline-block;
 			width: auto;
 			padding: 10px;
+		}
+
+		.table-wrap {
+			font-size: 14px;
+			color: #666;
+		}
+
+		/**
+		*修改地图infowindow样式
+		*/
+
+		.BMap_pop div:nth-child(1) div:nth-child(1) {
+			border-radius: 7px 0 0 0;
+		}
+
+		.BMap_pop div:nth-child(3) div:nth-child(1) {
+			border-radius: 0 7px 0 0;
+		}
+
+		.BMap_pop div:nth-child(5) div:nth-child(1) {
+			border-radius: 0 0 0 7px;
+		}
+
+		.BMap_pop div:nth-child(7) div:nth-child(1) {
+			border-radius: 0 0 7px 0;
+		}
+
+		.BMap_pop div:nth-child(8) img {
+			display: none;
+		}
+
+		.BMap_pop div:nth-child(8) {
+			max-height: 60px;
+			height: 60px!important;
+			background: url('http://image.tf56.com/dfs/group1/M00/41/7C/CiFBClokrmSAEtPXAABZohwMOmY448.png') -204px -691px;
+		}
+
+		.BMap_shadow {
+			display: none;
+		}
+
+		.BMap_pop>img {
+			display: none;
 		}
 	</style>
 </head>
@@ -110,16 +154,17 @@
 		var content = '';
 		content += "<table class='table-wrap'>";
 		content += "<tr>";
-		content += "<td width='40px'>*名称：</td>";
+		content += "<td width='60px'>*名称：</td>";
 		content += "<td width='230px'><input style='width:230px' type='text' id='txtName' value='" + data.name + "'></td>";
 		content += "</tr>";
 		content += "<tr>";
-		content += "<td width='40px'>*地址：</td>";
+		content += "<td width='60px'>*地址：</td>";
 		content += "<td width='230px'><input style='width:230px' type='text' id='txtAddr' value='" + data.address + "'></td>";
 		content += "</tr>";
 		content += "<tr>";
 		content += "<td align='right' colspan='2'>";
 		content += "<input type='button' name='btnOK' class='table-btn' onclick='fnOK()' value='确定'>";
+		content += "<input type='button' name='btnOK' class='table-btn' onclick='fnDEL()' value='删除'>";
 		content += "</td>";
 		content += "</tr>";
 		content += "</table>";
@@ -137,9 +182,9 @@
 			width: 300,
 			height: 0,
 			offset: {
-				width: -0,
+				width: -16,
 				height: -20
-			}
+			},
 		};
 		var content = infoHtml(data), pt = mkr.getPosition();
 		infoWin = new BMap.InfoWindow(content, opts);
@@ -163,6 +208,12 @@
 		if (infoWin.isOpen()) {
 			map.closeInfoWindow();
 		}
+	}
+
+	//删除
+	function fnDEL() {
+		map.closeInfoWindow();
+		map.removeOverlay(curMkr);
 	}
 
 </script>

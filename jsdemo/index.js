@@ -24,6 +24,18 @@ export default {
             parent: "tool1"
           }
         ]
+      },
+      {
+        key: "tool2",
+        title: "路线规划",
+        page: [
+          {
+            name: "drawline",
+            icon: "drawline",
+            title: "驾车路线",
+            parent: "tool2"
+          }
+        ]
       }
     ],
     component: [
@@ -55,12 +67,12 @@ export default {
         key: "sub2",
         title: "点线面",
         page: [
-          {
-            name: "overlay",
-            icon: "overlay",
-            title: "自定义覆盖物",
-            parent: "sub2"
-          },
+          // {
+          //   name: "overlay",
+          //   icon: "overlay",
+          //   title: "自定义覆盖物",
+          //   parent: "sub2"
+          // },
           {
             name: "marker",
             icon: "marker",

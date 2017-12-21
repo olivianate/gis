@@ -42,6 +42,49 @@
 			width: auto;
 			padding: 10px;
 		}
+
+		/**
+		*修改地图infowindow样式
+		*/
+
+		.BMap_pop div:nth-child(1) div:nth-child(1) {
+			border-radius: 7px 0 0 0;
+		}
+
+		.BMap_pop div:nth-child(3) div:nth-child(1) {
+			border-radius: 0 7px 0 0;
+		}
+
+		.BMap_pop div:nth-child(5) div:nth-child(1) {
+			border-radius: 0 0 0 7px;
+		}
+
+		.BMap_pop div:nth-child(7) div:nth-child(1) {
+			border-radius: 0 0 7px 0;
+		}
+
+		.BMap_pop div:nth-child(8) img {
+			display: none;
+		}
+
+		.BMap_pop div:nth-child(8) {
+			max-height: 60px;
+			height: 60px!important;
+			background: url('http://image.tf56.com/dfs/group1/M00/41/7C/CiFBClokrmSAEtPXAABZohwMOmY448.png') -204px -691px;
+		}
+
+		.BMap_shadow {
+			display: none;
+		}
+
+		.BMap_pop>img {
+			display: none;
+		}
+
+		.table_wrap {
+			color: #666;
+			font-size: 14px;
+		}
 	</style>
 </head>
 
@@ -172,7 +215,7 @@
 				target = e.target || e.currentTarget;
 			}
 			drawing = false;
-			overlayClick(target, pt);
+			overlayClick(target, e.point);
 		});
 		drawing = true;
 		overlayClick(o, pt);
@@ -180,6 +223,7 @@
 
 
 	function overlayClick(o, pt) {
+		curOverlay = o;
 		var content = infoHtml(o.data);
 		var newpt = new BMap.Point(pt.lng, pt.lat);
 		infoWin = new BMap.InfoWindow(content, newpt);
@@ -226,7 +270,7 @@
 
 	function infoHtml(data) {
 		var content = '';
-		content += "<table class='table-wrap'>";
+		content += "<table class='table_wrap'>";
 		content += "<tr>";
 		content += "<td width='60px'>*名称：</td>";
 		if (drawing) {

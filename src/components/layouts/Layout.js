@@ -2,7 +2,7 @@ import React, { PureComponent, Children, cloneElement } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu } from "antd";
 import "./Layout.less";
-import IconLogo from "../../images/logo.svg";
+import IconLogo from "../../images/logo2.svg";
 const IconProps = {
   width: 64,
   height: 64
@@ -43,7 +43,7 @@ export default class Layout extends PureComponent {
             >
               <Menu.Item key="/">
                 <NavLink to="/" exact>
-                  首页
+                  常见问题
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/component">
@@ -53,9 +53,9 @@ export default class Layout extends PureComponent {
               <Menu.Item key="/tool">
                 <NavLink to="/tool/tool1/drawmarker">数据展示</NavLink>
               </Menu.Item>
-              <Menu.Item key="/question">
+              {/* <Menu.Item key="/question">
                 <NavLink to="/question">常见问题</NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           </div>
         </header>

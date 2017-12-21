@@ -13,7 +13,7 @@ import "codemirror/mode/xml/xml";
 import PropTypes, { func } from "prop-types";
 import { Icon } from "antd";
 import copy from "copy-to-clipboard";
-import defaultRepl from "!html-loader!../../../static/temple/index.html";
+import defaultRepl from "!html-loader!../../../jsdemo/temple/index.html";
 import "./PlayGround.less";
 import "../pages/markdown.less";
 
@@ -41,7 +41,7 @@ export default class PlayGround extends Component {
   async loadRepl() {
     const { componentName } = this.props;
     try {
-      const repl = await import(`!html-loader!../../../static/${componentName}/index.html`);
+      const repl = await import(`!html-loader!../../../jsdemo/${componentName}/index.html`);
 
       this.setState({
         repl
@@ -49,7 +49,7 @@ export default class PlayGround extends Component {
       this.executeCode(repl);
 
       var _this = this;
-      import(`../../../static/${componentName}/desc.md`).then(function(data) {
+      import(`../../../jsdemo/${componentName}/desc.md`).then(function(data) {
         _this.setState({
           article: data
         });
@@ -61,7 +61,7 @@ export default class PlayGround extends Component {
       this.executeCode(defaultRepl);
 
       var _this = this;
-      import("../../../static/temple/desc.md").then(function(data) {
+      import("../../../jsdemo/temple/desc.md").then(function(data) {
         _this.setState({
           article: data
         });

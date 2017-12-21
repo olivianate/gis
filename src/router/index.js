@@ -12,10 +12,10 @@ export default class ROOT extends Component {
         <div>
           <HashRouter basename="/">
             <div>
-              <Route path="/" component={HomePage} exact />
+              <Route path="/" component={QuestionPage} exact />
               <Route path="/component" component={ComponentPage} />
               <Route path="/tool" component={ToolPage} />
-              <Route path="/question" component={QuestionPage} />
+              {/* <Route path="/question" component={QuestionPage} /> */}
             </div>
           </HashRouter>
         </div>

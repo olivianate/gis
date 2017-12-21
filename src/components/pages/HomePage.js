@@ -30,18 +30,22 @@ class Home extends Component {
     const opt = this.getStarBox();
     return (
       <LayoutHome {...this.props}>
-        <div className="home-c1" />
         <div className="starsBox" ref="starsBox">
           {opt.items}
         </div>
-        <div className="earth">
-          <div className="sand snd-1">
-            <div className="cam cam-1" />
-            <div className="cam cam-2" />
-            <div className="cam cam-3" />
-            <div className="cam cam-4" />
-            <div className="cam cam-5" />
-            <div className="cam cam-6" />
+        <div className="home-c1">
+          <div className="home-contnet_1">
+            <div className="home-contnet_1_left">123456789</div>
+            <div className="earth">
+              <div className="sand snd-1">
+                <div className="cam cam-1" />
+                <div className="cam cam-2" />
+                <div className="cam cam-3" />
+                <div className="cam cam-4" />
+                <div className="cam cam-5" />
+                <div className="cam cam-6" />
+              </div>
+            </div>
           </div>
         </div>
       </LayoutHome>

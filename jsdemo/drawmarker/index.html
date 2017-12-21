@@ -45,7 +45,12 @@
 
 		.info-wrap a {
 			cursor: pointer;
+			margin: 10px;
 			color: #108ee9;
+		}
+
+		.info-btn {
+			text-align: right;
 		}
 	</style>
 </head>
@@ -143,7 +148,10 @@
 			$('.editBtn').on('click', function () {
 				openInfo(currentOverlay, 'edit');
 			});
-
+			$('.delBtn').on('click', function () {
+				// console.log(currentOverlay);
+				map.removeOverlay(currentOverlay);
+			});
 			$('.saveBtn').on('click', function () {
 				var address = $('.addressInput').val();
 				currentOverlay.data.address = address;
@@ -157,7 +165,8 @@
 			'<p>地&emsp;址：' +
 			data.address +
 			'</p>' +
-			'<p>' +
+			'<p class="info-btn">' +
+			'<a class="delBtn" data-previewpoiid="' + data.previewpoiid + '">删除</a>' +
 			'<a class="editBtn" data-previewpoiid="' + data.previewpoiid + '">编辑</a>' +
 			'</p>' +
 			'</div>';

@@ -3,7 +3,7 @@ import lowerFirst from "lodash/lowerFirst";
 import "../app.less";
 import React, { Component } from "react";
 import PlayGround from "../partials/PlayGround";
-import pages from "../../../static/index";
+import pages from "../../../jsdemo/index";
 import Layout from "../layouts/Layout";
 import { Menu, Icon } from "antd";
 const SubMenu = Menu.SubMenu;
