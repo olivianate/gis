@@ -134,6 +134,18 @@ export default {
             parent: "sub5"
           }
         ]
+      },
+      {
+        key: "sub6",
+        title: "echarts数据可视化",
+        page: [
+          {
+            name: "echartsProvince",
+            icon: "echartsProvince",
+            title: "底图编辑",
+            parent: "sub6"
+          }
+        ]
       }
     ]
   }

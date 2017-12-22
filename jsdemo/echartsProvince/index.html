@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body,
+		html {
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+
+		#main {
+			height: 100vh;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script src="https://cdn.bootcss.com/echarts/3.8.4/echarts.js"></script>
+	<script src="https://cdn.bootcss.com/echarts/3.8.4/extension/bmap.js"></script>
+	<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<div id="main"></div>
+</body>
+
+</html>
+<script>
+	var myChart = echarts.init(document.getElementById('main'));
+	var option = {
+		backgroundColor: '#404a59',
+		tooltip: {
+			trigger: 'item'
+		},
+		bmap: {
+			center: [104.114129, 37.550339],
+			zoom: 5,
+			roam: true,
+			mapStyle: {
+				styleJson: [
+					{
+						"featureType": "all",
+						"elementType": "geometry",
+						"stylers": {
+							"hue": "#007fff",
+							"saturation": 89
+						}
+					},
+					{
+						"featureType": "water",
+						"elementType": "all",
+						"stylers": {
+							"color": "#ffffff"
+						}
+					}
+				]
+			}
+		}
+	};
+	myChart.setOption(option, true);
+</script>
