@@ -1,1 +1,1 @@
-webpackJsonp([9],{607:function(n,p){n.exports='<h3 id="-">说明</h3>\n<p>无</p>\n'}});
+webpackJsonp([9],{607:function(o,a){o.exports='<h3 id="-">说明</h3>\n<p>可以利用百度地图的添加标注工具类MarkerTool，添加标注。 此工具类允许用户在地图上点击后添加一个点标注，允许用户设定标注的图标样式。</p>\n<p>参考：<a href="http://api.map.baidu.com/library/MarkerTool/1.2/docs/symbols/BMapLib.MarkerTool.html">http://api.map.baidu.com/library/MarkerTool/1.2/docs/symbols/BMapLib.MarkerTool.html</a></p>\n'}});
