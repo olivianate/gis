@@ -74,12 +74,12 @@
 			strokeColor: '#111'
 		}));
 
-	var startIcon = new BMap.Icon("http://managementtest.ehuodi.com/orderMotionWeb/motion/orderModules/goodsOrderPath/img/transpathfromicon.png", new BMap.Size(36,43));
-	var start = new BMap.Marker(new BMap.Point(Number(pts[0].longitude), Number(pts[0].latitude)),{icon:startIcon});  // 创建标注
-	var endIcon = new BMap.Icon("http://managementtest.ehuodi.com/orderMotionWeb/motion/orderModules/goodsOrderPath/img/transpathendicon.png", new BMap.Size(36,43));
-	var end = new BMap.Marker(new BMap.Point(Number(pts[pts.length-1].longitude), Number(pts[pts.length-1].latitude)),{icon:endIcon});
-	map.addOverlay(start); 
-	map.addOverlay(end); 
+		var startIcon = new BMap.Icon("http://image.tf56.com/dfs/group1/M00/43/DD/CiFBClo7k-mAV7wgAAAIqlijcWg501.png", new BMap.Size(36, 43));
+		var start = new BMap.Marker(new BMap.Point(Number(pts[0].longitude), Number(pts[0].latitude)), { icon: startIcon });  // 创建标注
+		var endIcon = new BMap.Icon("http://image.tf56.com/dfs/group1/M00/43/DD/CiFBCVo7k-WAdObSAAAIXI67WJs084.png", new BMap.Size(36, 43));
+		var end = new BMap.Marker(new BMap.Point(Number(pts[pts.length - 1].longitude), Number(pts[pts.length - 1].latitude)), { icon: endIcon });
+		map.addOverlay(start);
+		map.addOverlay(end);
 
 		map.setViewport(points);
 		var lushu = new BMapLib.LuShu(map, points, {
