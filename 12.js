@@ -1,1 +1,1 @@
-webpackJsonp([12],{606:function(n,p){n.exports='<h3 id="-">说明</h3>\n<p>echarts对于做数据可视化，不管是做图表、地图还是其他，都非常方便。\n目前这里为了使代码简单明了，省了很多参数配置，只显示了最简单的一张地图，后续持续更新...</p>\n<p>百度地图地图编辑工具 <a href="http://lbsyun.baidu.com/custom/">http://lbsyun.baidu.com/custom/</a></p>\n'}});
+webpackJsonp([12],{610:function(e,p){e.exports='<h3 id="-">说明</h3>\n<p>Geocoder类用于获取用户的地址解析.</p>\n<p>参考：<a href="http://lbsyun.baidu.com/cms/jsapi/reference/jsapi_reference.html#a7b27">http://lbsyun.baidu.com/cms/jsapi/reference/jsapi_reference.html#a7b27</a></p>\n'}});
