@@ -90,6 +90,18 @@ export default {
             icon: "drawing",
             title: "创建多边形,圆",
             parent: "sub2"
+          },
+          {
+            name: "lushu",
+            icon: "lushu",
+            title: "路书",
+            parent: "sub2"
+          },
+          {
+            name: "areaRestriction",
+            icon: "areaRestriction",
+            title: "区域遮罩",
+            parent: "sub2"
           }
         ]
       },

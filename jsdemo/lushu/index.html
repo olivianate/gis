@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>地图展示</title>
+	<style type="text/css">
+		body,
+		html {
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.drawingToolbar {
+			z-index: 999;
+			position: absolute;
+			top: 10px;
+			;
+			left: 10px;
+			right: 10px;
+			width: 100%;
+			line-height: 1;
+		}
+
+		.drawingToolbar table {
+			background: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<div id="map"></div>
+	<!-- <div class="drawingToolbar">
+		<table>
+			<tr>
+				<td><span>策略</span></td>
+				<td><div id="driving_way">
+					<select>
+						<option value="0">最少时间</option>
+						<option value="1">最短距离</option>
+						<option value="2">避开高速</option>
+					</select>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td><span>起点</span></td>
+				<td><input type="text" id="sPoint" placeholder="120.290785,30.488837"></td>
+			</tr>
+			<tr>
+				<td><span>终点</span></td>
+				<td><input type="text" id="ePoint" placeholder="120.208989,30.33758"></td>
+			</tr>
+			<tr>
+				<td ><input type="button" value="查询" id="btnSearch" onclick="fnSearch()"> </td>
+				<td ><input type="button" value="重置" id="btnReset" onclick="fnReset()"> </td>
+			</tr>
+		</table>
+		<br/>
+		<textarea id="result0" rows="1" cols="40"></textarea>
+		<br />
+		<textarea id="result1" rows="1" cols="40"></textarea>
+		<br />
+		<textarea id="result2" rows="1" cols="40"></textarea>
+	</div> -->
+</body>
+
+</html>
+<script>
+	var map;
+	//创建和初始化地图函数：
+	function initMap() {
+		createMap();//创建地图
+		setMapEvent();//设置地图事件
+	};
+	function createMap() {
+		map = new BMap.Map("map");
+		map.centerAndZoom(new BMap.Point(112.571757, 37.798085), 9);
+	};
+	function setMapEvent() {
+		map.enableScrollWheelZoom();
+	};
+	initMap();
+
+	var LuShu = function (pts) {
+		var points = [];
+		for (var j = 0; j < pts.length; j++) {
+			points.push(new BMap.Point(Number(pts[j].longitude), Number(pts[j].latitude)));
+		}
+		map.addOverlay(new BMap.Polyline(points, {
+			strokeColor: '#111'
+		}));
+
+	var startIcon = new BMap.Icon("http://managementtest.ehuodi.com/orderMotionWeb/motion/orderModules/goodsOrderPath/img/transpathfromicon.png", new BMap.Size(36,43));
+	var start = new BMap.Marker(new BMap.Point(Number(pts[0].longitude), Number(pts[0].latitude)),{icon:startIcon});  // 创建标注
+	var endIcon = new BMap.Icon("http://managementtest.ehuodi.com/orderMotionWeb/motion/orderModules/goodsOrderPath/img/transpathendicon.png", new BMap.Size(36,43));
+	var end = new BMap.Marker(new BMap.Point(Number(pts[pts.length-1].longitude), Number(pts[pts.length-1].latitude)),{icon:endIcon});
+	map.addOverlay(start); 
+	map.addOverlay(end); 
+
+		map.setViewport(points);
+		var lushu = new BMapLib.LuShu(map, points, {
+			defaultContent: "",
+			autoView: true, // 是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
+			icon: new BMap.Icon('http://lbsyun.baidu.com/jsdemo/img/car.png', new BMap.Size(52, 26), { anchor: new BMap.Size(27, 13) }),
+			speed: 4500,
+			enableRotation: true, // 是否设置marker随着道路的走向进行选装
+			landmarkPois: [], //
+		});
+		return lushu;
+	}
+	var pts = [
+		{
+			"longitude": "120.19644299729393",
+			"latitude": "30.336266395280507"
+		},
+		{
+			"longitude": "120.19499893629565",
+			"latitude": "30.33580387644265"
+		},
+		{
+			"longitude": "120.19270926454799",
+			"latitude": "30.33534346389934"
+		},
+		{
+			"longitude": "120.1919912573589",
+			"latitude": "30.335169217095974"
+		},
+		{
+			"longitude": "120.19192743672534",
+			"latitude": "30.33517137567868"
+		},
+		{
+			"longitude": "120.19136899465029",
+			"latitude": "30.33507274641127"
+		},
+		{
+			"longitude": "120.19021223060996",
+			"latitude": "30.334867589112662"
+		},
+		{
+			"longitude": "120.1888161467491",
+			"latitude": "30.334587019812705"
+		},
+		{
+			"longitude": "120.18782692978719",
+			"latitude": "30.334387452663588"
+		},
+		{
+			"longitude": "120.1866941166761",
+			"latitude": "30.334094230061464"
+		},
+		{
+			"longitude": "120.18540974024575",
+			"latitude": "30.333785382508143"
+		},
+		{
+			"longitude": "120.18451625881477",
+			"latitude": "30.33351756676833"
+		},
+		{
+			"longitude": "120.1829526826992",
+			"latitude": "30.333147400123945"
+		},
+		{
+			"longitude": "120.18154865752979",
+			"latitude": "30.332806834963577"
+		},
+		{
+			"longitude": "120.18061530263941",
+			"latitude": "30.332601117042827"
+		},
+		{
+			"longitude": "120.18059934689883",
+			"latitude": "30.332589154773963"
+		},
+		{
+			"longitude": "120.18059136948014",
+			"latitude": "30.332587174228202"
+		},
+		{
+			"longitude": "120.18059137083523",
+			"latitude": "30.33259917599558"
+		},
+		{
+			"longitude": "120.18059137060939",
+			"latitude": "30.332597175701014"
+		},
+		{
+			"longitude": "120.18058339386822",
+			"latitude": "30.332601196038638"
+		},
+		{
+			"longitude": "120.18051160138907",
+			"latitude": "30.3326213767067"
+		},
+		{
+			"longitude": "120.18024834879",
+			"latitude": "30.332576021356818"
+		},
+		{
+			"longitude": "120.17964207114677",
+			"latitude": "30.332483506372387"
+		},
+		{
+			"longitude": "120.17905973293767",
+			"latitude": "30.3324649411499"
+		},
+		{
+			"longitude": "120.17894007094475",
+			"latitude": "30.33243123131496"
+		},
+		{
+			"longitude": "120.1789400713967",
+			"latitude": "30.332435231903563"
+		},
+		{
+			"longitude": "120.17894007117073",
+			"latitude": "30.332433231609258"
+		},
+		{
+			"longitude": "120.17879648067031",
+			"latitude": "30.332427584810258"
+		},
+		{
+			"longitude": "120.17809449542601",
+			"latitude": "30.332519327197232"
+		},
+		{
+			"longitude": "120.17744835375484",
+			"latitude": "30.332648934627876"
+		},
+		{
+			"longitude": "120.1773765576388",
+			"latitude": "30.332641109770133"
+		},
+		{
+			"longitude": "120.17735262838318",
+			"latitude": "30.332663171776154"
+		},
+		{
+			"longitude": "120.17685008639847",
+			"latitude": "30.332886437553892"
+		},
+		{
+			"longitude": "120.17590085204787",
+			"latitude": "30.3334368420512"
+		},
+		{
+			"longitude": "120.1762040687708",
+			"latitude": "30.334142205540616"
+		},
+		{
+			"longitude": "120.17716145298517",
+			"latitude": "30.33513400806636"
+		},
+		{
+			"longitude": "120.17815074872634",
+			"latitude": "30.33618173421618"
+		},
+		{
+			"longitude": "120.17869326756397",
+			"latitude": "30.336784488975066"
+		},
+		{
+			"longitude": "120.17878900513364",
+			"latitude": "30.33688226776192"
+		},
+		{
+			"longitude": "120.17879698481651",
+			"latitude": "30.33690425141002"
+		},
+		{
+			"longitude": "120.17840607155954",
+			"latitude": "30.336641174869627"
+		},
+		{
+			"longitude": "120.17765611445314",
+			"latitude": "30.335774889444433"
+		},
+		{
+			"longitude": "120.17748060165432",
+			"latitude": "30.335655302681435"
+		},
+		{
+			"longitude": "120.17751250860066",
+			"latitude": "30.33563722160213"
+		},
+		{
+			"longitude": "120.17746463861631",
+			"latitude": "30.335579330495072"
+		},
+		{
+			"longitude": "120.17701785496567",
+			"latitude": "30.335068350502553"
+		},
+		{
+			"longitude": "120.17642746714179",
+			"latitude": "30.33444770440784"
+		},
+		{
+			"longitude": "120.17622003078368",
+			"latitude": "30.33420817631362"
+		},
+		{
+			"longitude": "120.17599664233578",
+			"latitude": "30.333992690464797"
+		},
+		{
+			"longitude": "120.17563761733338",
+			"latitude": "30.333581506348512"
+		},
+		{
+			"longitude": "120.17574127171538",
+			"latitude": "30.333133186876065"
+		},
+		{
+			"longitude": "120.17686599368926",
+			"latitude": "30.332468336852585"
+		},
+		{
+			"longitude": "120.17763177290838",
+			"latitude": "30.332140409121997"
+		},
+		{
+			"longitude": "120.17768761267757",
+			"latitude": "30.332132270706328"
+		},
+		{
+			"longitude": "120.17773547519947",
+			"latitude": "30.332124151878457"
+		},
+		{
+			"longitude": "120.17773547384265",
+			"latitude": "30.3321121501157"
+		},
+		{
+			"longitude": "120.17771154032118",
+			"latitude": "30.332096206593935"
+		},
+		{
+			"longitude": "120.1777115398689",
+			"latitude": "30.33209220600643"
+		},
+		{
+			"longitude": "120.17770356489252",
+			"latitude": "30.332112228552646"
+		},
+		{
+			"longitude": "120.17781524303754",
+			"latitude": "30.33208394987857"
+		},
+		{
+			"longitude": "120.17779929060228",
+			"latitude": "30.332101991750896"
+		},
+		{
+			"longitude": "120.17825398524614",
+			"latitude": "30.33203486334146"
+		},
+		{
+			"longitude": "120.17973774082388",
+			"latitude": "30.331981196055388"
+		},
+		{
+			"longitude": "120.18099816561428",
+			"latitude": "30.332226113679994"
+		},
+		{
+			"longitude": "120.18252982818942",
+			"latitude": "30.332590368191443"
+		},
+		{
+			"longitude": "120.18390195223296",
+			"latitude": "30.33298301592037"
+		},
+		{
+			"longitude": "120.18417318332489",
+			"latitude": "30.333032348527283"
+		},
+		{
+			"longitude": "120.18418913731819",
+			"latitude": "30.33302830823924"
+		},
+		{
+			"longitude": "120.18417318106958",
+			"latitude": "30.333012345574627"
+		},
+		{
+			"longitude": "120.18414127646795",
+			"latitude": "30.33305043057835"
+		},
+		{
+			"longitude": "120.1841253227022",
+			"latitude": "30.333056471160187"
+		},
+		{
+			"longitude": "120.18414925391488",
+			"latitude": "30.33305241102551"
+		},
+		{
+			"longitude": "120.1841652072306",
+			"latitude": "30.333042369852283"
+		},
+		{
+			"longitude": "120.18425296074044",
+			"latitude": "30.333078156826982"
+		},
+		{
+			"longitude": "120.18521025805639",
+			"latitude": "30.333333812164202"
+		},
+		{
+			"longitude": "120.18686160647763",
+			"latitude": "30.333795768575577"
+		},
+		{
+			"longitude": "120.18841722336235",
+			"latitude": "30.334107941398326"
+		},
+		{
+			"longitude": "120.1898611742219",
+			"latitude": "30.334444398760027"
+		},
+		{
+			"longitude": "120.19149660743531",
+			"latitude": "30.334820391988302"
+		},
+		{
+			"longitude": "120.19321184927307",
+			"latitude": "30.335256206805912"
+		},
+		{
+			"longitude": "120.19473564441921",
+			"latitude": "30.335604495427187"
+		},
+		{
+			"longitude": "120.19583662123327",
+			"latitude": "30.33583381943703"
+		},
+		{
+			"longitude": "120.19657061558136",
+			"latitude": "30.335996041550864"
+		},
+		{
+			"longitude": "120.19689772489835",
+			"latitude": "30.33607525157824"
+		},
+		{
+			"longitude": "120.1975359888574",
+			"latitude": "30.3362077093057"
+		},
+		{
+			"longitude": "120.19809446716269",
+			"latitude": "30.336256352499255"
+		},
+		{
+			"longitude": "120.19878057775982",
+			"latitude": "30.336080653952905"
+		},
+		{
+			"longitude": "120.19937890398867",
+			"latitude": "30.33564113332737"
+		},
+		{
+			"longitude": "120.19966604998297",
+			"latitude": "30.33496033451855"
+		},
+		{
+			"longitude": "120.1997536813376",
+			"latitude": "30.333789947617518"
+		},
+		{
+			"longitude": "120.19983327836913",
+			"latitude": "30.33212350823153"
+		},
+		{
+			"longitude": "120.19993684897818",
+			"latitude": "30.330799062968456"
+		},
+		{
+			"longitude": "120.19996069317874",
+			"latitude": "30.32999088733184"
+		},
+		{
+			"longitude": "120.19999254014684",
+			"latitude": "30.32939872414893"
+		},
+		{
+			"longitude": "120.20004032613528",
+			"latitude": "30.32864849980682"
+		},
+		{
+			"longitude": "120.2000721893178",
+			"latitude": "30.328200357984436"
+		},
+		{
+			"longitude": "120.20011202257916",
+			"latitude": "30.327678186393793"
+		},
+		{
+			"longitude": "120.20018375637432",
+			"latitude": "30.327037920904793"
+		},
+		{
+			"longitude": "120.20023155676228",
+			"latitude": "30.326415716276593"
+		},
+		{
+			"longitude": "120.20027935326854",
+			"latitude": "30.32575950714816"
+		},
+		{
+			"longitude": "120.20031118433367",
+			"latitude": "30.32502932651778"
+		},
+		{
+			"longitude": "120.20029515478944",
+			"latitude": "30.32439127507911"
+		},
+		{
+			"longitude": "120.20024721644542",
+			"latitude": "30.323799307642247"
+		},
+		{
+			"longitude": "120.20019131873943",
+			"latitude": "30.3233753833382"
+		},
+		{
+			"longitude": "120.20010350442084",
+			"latitude": "30.322927533122385"
+		}
+	];
+
+	var luShuBar = LuShu(pts);
+	luShuBar.start();
+</script>
